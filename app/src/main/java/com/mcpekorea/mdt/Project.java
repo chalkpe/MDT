@@ -1,5 +1,9 @@
 package com.mcpekorea.mdt;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -53,5 +57,22 @@ public class Project {
 
     public int getPatchesCount(){
         return this.patches.size();
+    }
+
+    public JSONObject toJSON(){
+        JSONObject object = new JSONObject();
+        try {
+            object.put("name", this.name);
+            object.put("author", this.author);
+
+            JSONArray array = new JSONArray();
+            for(Patch patch : patches){
+                array.put(patch.toJSON());
+            }
+            object.put("patches", array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 }

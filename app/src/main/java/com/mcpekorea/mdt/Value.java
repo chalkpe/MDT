@@ -1,5 +1,8 @@
 package com.mcpekorea.mdt;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -36,5 +39,13 @@ public class Value {
     @Override
     public boolean equals(Object o) {
         return o instanceof Value && this.bytes.equals(((Value) o).bytes);
+    }
+
+    public JSONArray toJSON(){
+        JSONArray array = new JSONArray();
+        for(Byte b : bytes){
+            array.put(b);
+        }
+        return array;
     }
 }
