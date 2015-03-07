@@ -17,9 +17,17 @@ public class Project {
 	private List<Patch> patches;
 
 	public Project(){
+		this("", "");
+	}
+
+	public Project(String name){
+		this(name, "");
+	}
+
+	public Project(String name, String author){
+		this.name = name;
+		this.author = author;
 		patches = new ArrayList<Patch>();
-		this.name = "";
-		this.author = "";
 	}
 
 	public String getName() {

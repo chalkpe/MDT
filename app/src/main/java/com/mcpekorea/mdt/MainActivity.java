@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 public class MainActivity extends ActionBarActivity {
     private ListView listView;
+	private WorkspaceAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -16,7 +17,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(new WorkspaceAdapter(this, null));
+
+	    adapter = new WorkspaceAdapter(this, null);
+        listView.setAdapter(adapter);
     }
 
     @Override

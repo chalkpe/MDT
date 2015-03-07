@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class WorkspaceAdapter extends BaseAdapter{
             throw new NullPointerException("context must not be null");
         }
         if(projects == null){
-            throw new NullPointerException("projects must not be null");
+            projects = new LinkedList<Project>();
         }
 
         this.context = context;
@@ -32,6 +33,10 @@ public class WorkspaceAdapter extends BaseAdapter{
 
         this.inflater = LayoutInflater.from(context);
     }
+
+	public void addProject(Project project){
+		this.projects.add(project);
+	}
 
     @Override
     public int getCount(){
@@ -63,7 +68,13 @@ public class WorkspaceAdapter extends BaseAdapter{
             holder = (WorkspaceHolder) convertView.getTag();
         }
         holder.title.setText(project.getName());
-        holder.subtitle.setText(String.format("%d patches, by %s", project.getPatchesCount(), project.getAuthor()));
+
+	    String author = project.getAuthor();
+	    if(author.equals("")){
+		    author = "unknown";
+	    }
+
+        holder.subtitle.setText(String.format("%d patches, by %s", project.getPatchesCount(), author));
 
         return convertView;
     }
