@@ -28,16 +28,16 @@ public class ProjectExporter {
 			byte[] valueBin = patch.getValue().getBytes();
 			length += (valueBin.length + 4);
 		}
-		byte[] ret = new byte[length];
-		ret = writeBytes(ret, new byte[]{(byte)0xff, 0x50, 0x54, 0x50, 0x00}, 0);
+		byte[] mod = new byte[length];
+		mod = writeBytes(mod, new byte[]{(byte) 0xff, 0x50, 0x54, 0x50, 0x00}, 0);
 
-		ret[5] =(byte) patches.size();
-		int patchStart = HEADER_END + offsetShift + (4*patches.size());
+		mod[5] = (byte) patches.size();
+		int patchStart = HEADER_END + offsetShift + (4 * patches.size());
 		int header = HEADER_END + offsetShift;
 
 		byte[] authorBin = author.getBytes();
 
-		ret = writeBytes(ret, authorBin, HEADER_END + 1);
+		mod = writeBytes(mod, authorBin, HEADER_END + 1);
 
 		for(Patch patch : patches){
 			Offset offset = patch.getOffset();
@@ -45,17 +45,17 @@ public class ProjectExporter {
 
 			byte[] offsetBin = offset.getBytes();
 			byte[] locBin = intToByteArray(header);
-			ret = writeBytes(ret, locBin, header);
-			ret = writeBytes(ret, offsetBin, patchStart);
+			mod = writeBytes(mod, locBin, header);
+			mod = writeBytes(mod, offsetBin, patchStart);
 
 			byte[] valueBin = value.getBytes();
-			ret = writeBytes(ret, valueBin, patchStart + 4);
+			mod = writeBytes(mod, valueBin, patchStart + 4);
 
 			patchStart += (4 + valueBin.length);
 			header += 4;
 		}
 
-		return ret;
+		return mod;
 	}
 
 	public static final byte[] writeBytes(byte[] src, byte[] c, int start){
@@ -70,11 +70,12 @@ public class ProjectExporter {
 				(byte)(value >>> 24),
 				(byte)(value >>> 16),
 				(byte)(value >>> 8),
-				(byte)value};
-	}
+				(byte)value
+		};
+}
 
-	public static final int byteArrayToInt(byte [] b) {
-		return (b[0] << 24)
+public static final int byteArrayToInt(byte [] b) {
+	return (b[0] << 24)
 				+ ((b[1] & 0xFF) << 16)
 				+ ((b[2] & 0xFF) << 8)
 				+ (b[3] & 0xFF);
