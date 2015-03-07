@@ -5,74 +5,81 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @since 2015-03-06
  * @author ChalkPE <amato0617@gmail.com>
  */
 public class Project {
-    private String name;
-    private String author;
-    private List<Patch> patches;
+	private String name;
+	private String author;
+	private List<Patch> patches;
 
-    public String getName() {
-        return name;
-    }
+	public Project(){
+		patches = new ArrayList<Patch>();
+		this.name = "";
+		this.author = "";
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+	public String getAuthor() {
+		return author;
+	}
 
-    public List<Patch> getPatches() {
-        return patches;
-    }
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
-    public void setPatches(List<Patch> patches) {
-        this.patches = patches;
-    }
+	public List<Patch> getPatches() {
+		return patches;
+	}
 
-    public void addPatch(Patch patch){
-        this.patches.add(patch);
-    }
+	public void setPatches(List<Patch> patches) {
+		this.patches = patches;
+	}
 
-    public void addPatch(int position, Patch patch){
-        this.patches.add(position, patch);
-    }
+	public void addPatch(Patch patch){
+		this.patches.add(patch);
+	}
 
-    public void removePatch(Patch patch){
-        this.patches.remove(patch);
-    }
+	public void addPatch(int position, Patch patch){
+		this.patches.add(position, patch);
+	}
 
-    public void removePatch(int position){
-        this.patches.remove(position);
-    }
+	public void removePatch(Patch patch){
+		this.patches.remove(patch);
+	}
 
-    public int getPatchesCount(){
-        return this.patches.size();
-    }
+	public void removePatch(int position){
+		this.patches.remove(position);
+	}
 
-    public JSONObject toJSON(){
-        JSONObject object = new JSONObject();
-        try {
-            object.put("name", this.name);
-            object.put("author", this.author);
+	public int getPatchesCount(){
+		return this.patches.size();
+	}
 
-            JSONArray array = new JSONArray();
-            for(Patch patch : patches){
-                array.put(patch.toJSON());
-            }
-            object.put("patches", array);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return object;
-    }
+	public JSONObject toJSON(){
+		JSONObject object = new JSONObject();
+		try {
+			object.put("name", this.name);
+			object.put("author", this.author);
+
+			JSONArray array = new JSONArray();
+			for(Patch patch : patches){
+				array.put(patch.toJSON());
+			}
+			object.put("patches", array);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return object;
+	}
 }

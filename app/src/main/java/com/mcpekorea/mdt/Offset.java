@@ -1,5 +1,4 @@
 package com.mcpekorea.mdt;
-
 import java.util.List;
 
 /**
@@ -7,33 +6,40 @@ import java.util.List;
  * @author ChalkPE <amato0617@gmail.com>
  */
 public class Offset extends Value {
-    public static final int SIZE = 3;
+	public static final int SIZE = 4;
 
-    public Offset(List<Byte> bytes){
-        super(bytes);
-    }
+	public Offset(byte[] bytes){
+		super(bytes);
 
-    @Override
-    public void setBytes(List<Byte> bytes) {
-        if(bytes == null){
-            throw new NullPointerException("bytes must not be null");
-        }
+		setBytes(bytes);
+	}
 
-        if(bytes.size() > SIZE){
-            throw new IllegalArgumentException("offset must be less than " + SIZE + " bytes");
-        }
+	@Override
+	public void setBytes(byte[] bytes) {
+		if(bytes == null){
+			throw new NullPointerException("bytes must not be null");
+		}
 
-        if(bytes.size() < SIZE){
-            for(int i = 0; i <  SIZE - bytes.size(); i++){
-                bytes.add(0, (byte) 0);
-            }
-        }
+		if(bytes.length != 4){
+			byte[] curBin = getBytes();
+			if(curBin != null){
+				byte[] tmp = new byte[4];
+				System.arraycopy(curBin, 0, tmp, Math.max(4 - bytes.length, 0), (bytes.length < 4) ? bytes.length : 4);
+				bytes = tmp;
+			}else{
+				byte[] tmp = new byte[4];
+				for(int i = 0; i < bytes.length; i++){
+					tmp[i] = bytes[i];
+				}
+				System.arraycopy(bytes, 0, tmp, Math.max(4 - bytes.length, 0), (bytes.length < 4) ? bytes.length : 4);
+			}
+		}
 
-        super.setBytes(bytes);
-    }
+		super.setBytes(bytes);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof Offset && super.equals(o);
-    }
+	@Override
+	public boolean equals(Object o) {
+		return o instanceof Offset && super.equals(o);
+	}
 }
