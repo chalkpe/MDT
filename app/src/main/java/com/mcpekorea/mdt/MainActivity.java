@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,15 +37,29 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        boolean succeed = false;
+
         if(!ROOT_DIRECTORY.exists()) {
-            ROOT_DIRECTORY.mkdirs();
+            succeed = ROOT_DIRECTORY.mkdirs();
+        }
+
+        if(!PROJECTS_DIRECTORY.exists()) {
+            succeed = succeed || PROJECTS_DIRECTORY.mkdirs();
+        }
+
+        if(!EXPORT_DIRECTORY.exists()) {
+            succeed = succeed || EXPORT_DIRECTORY.mkdirs();
         }
 
         try {
             //.mod isn't video file
-            new File(ROOT_DIRECTORY, ".nomedia").createNewFile();
+            succeed = succeed || new File(ROOT_DIRECTORY, ".nomedia").createNewFile();
         }catch (IOException e){
             e.printStackTrace();
+        }
+
+        if(succeed){
+            Log.d(getText(R.string.app_name).toString(), "Directories are created!");
         }
 
         findViewById(R.id.main_fab_add).setOnClickListener(new View.OnClickListener() {
@@ -63,12 +78,16 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        projects = new ArrayList<Project>(projectFiles.length);
-        for(File file : projectFiles){
-            try{
-                projects.add(Project.createFromJSON(new FileInputStream(file)));
-            }catch(FileNotFoundException e){
-                e.printStackTrace();
+        if(projectFiles == null || projectFiles.length == 0){
+            projects = new ArrayList<>();
+        }else{
+            projects = new ArrayList<>(projectFiles.length);
+            for(File file : projectFiles){
+                try{
+                    projects.add(Project.createFromJSON(new FileInputStream(file)));
+                }catch(FileNotFoundException e){
+                    e.printStackTrace();
+                }
             }
         }
 

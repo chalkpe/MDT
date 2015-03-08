@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class WorkspaceAdapter extends BaseAdapter{
             throw new NullPointerException("context must not be null");
         }
         if(projects == null){
-            projects = new ArrayList<Project>();
+            throw new NullPointerException("projects must not be null");
         }
 
         this.context = context;
