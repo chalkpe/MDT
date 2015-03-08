@@ -4,6 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -25,10 +29,14 @@ public class Project {
 	}
 
 	public Project(String name, String author){
-		this.name = name;
-		this.author = author;
-		patches = new ArrayList<Patch>();
+		this(name, author, new ArrayList<Patch>());
 	}
+
+    public Project(String name, String author, List<Patch> patches){
+        this.name = name;
+        this.author = author;
+        this.patches = patches;
+    }
 
 	public String getName() {
 		return name;
@@ -74,9 +82,45 @@ public class Project {
 		return this.patches.size();
 	}
 
+    public static Project createFromJSON(InputStream inputStream){
+        BufferedReader br = null;
+        try{
+            br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+            StringBuilder sb = new StringBuilder();
+            String read;
+            while((read = br.readLine()) != null){
+                sb.append(read);
+            }
+
+            JSONObject object = new JSONObject(sb.toString());
+            String name = object.getString("name");
+            String author = object.getString("author");
+
+            JSONArray array = object.getJSONArray("patches");
+            ArrayList<Patch> patches = new ArrayList<Patch>(array.length());
+            for(int i = 0; i < array.length(); i++){
+                patches.add(Patch.createFromJSON(array.getJSONObject(i)));
+            }
+
+            return new Project(name, author, patches);
+        }catch(IOException | JSONException e){
+            e.printStackTrace();
+            return null;
+        }finally{
+            try{
+                if(br != null){
+                    br.close();
+                }
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 	public JSONObject toJSON(){
 		JSONObject object = new JSONObject();
-		try {
+		try{
 			object.put("name", this.name);
 			object.put("author", this.author);
 
@@ -85,7 +129,7 @@ public class Project {
 				array.put(patch.toJSON());
 			}
 			object.put("patches", array);
-		} catch (JSONException e) {
+		}catch(JSONException e){
 			e.printStackTrace();
 		}
 		return object;

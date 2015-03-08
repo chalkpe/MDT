@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ public class WorkspaceAdapter extends BaseAdapter{
             throw new NullPointerException("context must not be null");
         }
         if(projects == null){
-            projects = new LinkedList<Project>();
+            projects = new ArrayList<Project>();
         }
 
         this.context = context;
@@ -71,7 +71,7 @@ public class WorkspaceAdapter extends BaseAdapter{
 
 	    String author = project.getAuthor();
 	    if(author.equals("")){
-		    author = "unknown";
+		    author = context.getText(R.string.default_authorName).toString();
 	    }
 
         holder.subtitle.setText(String.format("%d patches, by %s", project.getPatchesCount(), author));

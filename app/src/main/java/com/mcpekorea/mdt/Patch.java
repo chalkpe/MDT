@@ -11,7 +11,12 @@ public class Patch {
 	private Offset offset;
 	private Value value;
 
-	public Offset getOffset() {
+    public Patch(Offset offset, Value value) {
+        this.offset = offset;
+        this.value = value;
+    }
+
+    public Offset getOffset() {
 		return offset;
 	}
 
@@ -31,6 +36,18 @@ public class Patch {
 	public String toString() {
 		return this.offset.toString() + " : " + this.value.toString();
 	}
+
+    public static Patch createFromJSON(JSONObject object){
+        try{
+            Offset offset = Offset.createFromJSON(object.getJSONArray("offset"));
+            Value value = Offset.createFromJSON(object.getJSONArray("value"));
+
+            return new Patch(offset, value);
+        }catch(JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 	public JSONObject toJSON(){
 		JSONObject object = new JSONObject();
