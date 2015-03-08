@@ -37,6 +37,14 @@ public class WorkspaceAdapter extends BaseAdapter{
 		this.projects.add(project);
 	}
 
+	public void removeProject(Project project){
+		this.projects.remove(project);
+	}
+
+	public void removeProject(int index){
+		this.projects.remove(index);
+	}
+
     @Override
     public int getCount(){
         return this.projects.size();

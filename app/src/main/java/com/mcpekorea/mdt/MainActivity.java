@@ -1,5 +1,7 @@
 package com.mcpekorea.mdt;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -95,21 +97,42 @@ public class MainActivity extends ActionBarActivity {
 	    adapter = new WorkspaceAdapter(this, projects);
         listView.setAdapter(adapter);
 
-	    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-			@Override
-	        public void onItemClick(AdapterView<?> a, View v, int position, long l){
-				Project project = projects.get(position);
-				Intent intent = new Intent(MainActivity.this, PatchEditorActivity.class);
-				intent.putExtra("project", project);
-				startActivity(intent);
-			}
-	    });
-
-	    listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+	    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 		    @Override
-	        public boolean onItemLongClick(AdapterView<?> a, View v, int position, long l){
-			    // TODO: Project removing, etc.
-			    return false;
+		    public void onItemClick(AdapterView<?> a, View v, final int position, long l) {
+				final Project project = projects.get(position);
+				new AlertDialog.Builder(MainActivity.this)
+				.setTitle(project.getName())
+				.setNegativeButton(android.R.string.cancel, null)
+				.setNeutralButton(R.string.delete_project, new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface d, int i){
+						new AlertDialog.Builder(MainActivity.this)
+						.setTitle(R.string.confirm_delete_title)
+						.setMessage(String.format(getResources().getString(R.string.confirm_delete_message), project.getName()))
+						.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+							@Override
+							public void onClick(DialogInterface d, int i){
+								projects.remove(position);
+								adapter.notifyDataSetChanged();
+								File file = new File(PROJECTS_DIRECTORY, project.getName()+".json");
+								if(file.exists()){
+									file.delete();
+								}
+								Toast.makeText(MainActivity.this, String.format(getResources().getString(R.string.deleted_message), project.getName()), Toast.LENGTH_LONG).show();
+							}
+						})
+						.setNegativeButton(android.R.string.cancel, null).show();
+					}
+				})
+				.setPositiveButton(R.string.open_project, new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface d, int i){
+						Intent intent = new Intent(MainActivity.this, PatchEditorActivity.class);
+						intent.putExtra("project", project);
+						startActivity(intent);
+					}
+				}).show();
 		    }
 	    });
     }

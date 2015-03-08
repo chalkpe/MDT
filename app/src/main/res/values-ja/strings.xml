@@ -6,6 +6,12 @@
     <string name="action_settings">設定</string>
     <string name="action_create">生成</string>
 
+    <string name="open_project">開く</string>
+    <string name="delete_project">削除</string>
+    <string name="confirm_delete_title">本当ですか?</string>
+    <string name="confirm_delete_message">プロジェクト%sを消してもいいですか？削除すれば復旧することはできません。</string>
+    <string name="deleted_message">プロジェクト%sを成功的に削除しました。</string>
+
     <string name="create_workspace_project_name">プロジェクト名</string>
     <string name="create_workspace_author_name">制作者名</string>
 
