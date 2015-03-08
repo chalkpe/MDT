@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -93,6 +94,24 @@ public class MainActivity extends ActionBarActivity {
 
 	    adapter = new WorkspaceAdapter(this, projects);
         listView.setAdapter(adapter);
+
+	    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+			@Override
+	        public void onItemClick(AdapterView<?> a, View v, int position, long l){
+				Project project = projects.get(position);
+				Intent intent = new Intent(MainActivity.this, PatchEditorActivity.class);
+				intent.putExtra("project", project);
+				startActivity(intent);
+			}
+	    });
+
+	    listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+		    @Override
+	        public boolean onItemLongClick(AdapterView<?> a, View v, int position, long l){
+			    // TODO: Project removing, etc.
+			    return false;
+		    }
+	    });
     }
 
     @Override
@@ -129,8 +148,9 @@ public class MainActivity extends ActionBarActivity {
             File projectFile = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
             try{
                 BufferedWriter bw = new BufferedWriter(new FileWriter(projectFile));
-                bw.write(project.toJSON().toString(4));
-            }catch(IOException | JSONException e){
+                bw.write(project.toJSON().toString());
+	            bw.close();
+            }catch(IOException e){
                 e.printStackTrace();
             }
         }

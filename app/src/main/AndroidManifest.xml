@@ -24,6 +24,7 @@
             android:name=".CreateProjectActivity"
             android:label="@string/title_activity_create_workspace" >
         </activity>
+        <activity android:name=".PatchEditorActivity"></activity>
     </application>
 
 </manifest>

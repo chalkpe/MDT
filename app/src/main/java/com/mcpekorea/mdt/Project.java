@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * @since 2015-03-06
  * @author ChalkPE <amato0617@gmail.com>
  */
-public class Project {
+public class Project implements Serializable{
 	private String name;
 	private String author;
 	private List<Patch> patches;

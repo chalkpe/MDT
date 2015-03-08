@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @since 2015-03-06
  * @author ChalkPE <amato0617@gmail.com>
+ * @author onebone <jyc0410@naver.com>
  */
 
 public class ProjectAdapter extends BaseAdapter{
@@ -34,8 +35,15 @@ public class ProjectAdapter extends BaseAdapter{
 		this.inflater = LayoutInflater.from(context);
 	}
 
-	public void addPatch(Patch project){
-		this.patches.add(project);
+	public void addPatch(Patch patch){
+		addPatch(patch, true);
+	}
+
+	public void addPatch(Patch patch, boolean update){
+		this.patches.add(patch);
+		if(update) {
+			this.notifyDataSetChanged();
+		}
 	}
 
 	@Override
@@ -59,7 +67,7 @@ public class ProjectAdapter extends BaseAdapter{
 		ProjectHolder holder;
 
 		if(convertView == null){
-			convertView = this.inflater.inflate(R.layout.list_item, parent, false);
+			convertView = this.inflater.inflate(R.layout.list_patches, parent, false);
 
 			holder = new ProjectHolder();
 			holder.offset = (TextView) convertView.findViewById(R.id.list_item_offset);
@@ -69,7 +77,9 @@ public class ProjectAdapter extends BaseAdapter{
 		}else{
 			holder = (ProjectHolder) convertView.getTag();
 		}
+
 		holder.offset.setText(patch.getOffset().toString());
+		holder.value.setText(patch.getValue().toString());
 
 		return convertView;
 	}

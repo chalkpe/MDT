@@ -3,12 +3,14 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <EditText
+    <TextView
         android:id="@+id/list_item_offset"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <EditText
+    <TextView
         android:id="@+id/list_item_value"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

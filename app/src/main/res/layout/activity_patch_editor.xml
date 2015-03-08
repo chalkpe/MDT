@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/author_area"
+        android:lines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <ListView
+        android:layout_below="@id/author_area"
+        android:id="@+id/list_patches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_patch_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_icon="@drawable/ic_add_black_48dp"
+        fab:fab_colorNormal="@color/fab"
+        fab:fab_colorPressed="@color/fabPressed"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp" />
+</RelativeLayout>

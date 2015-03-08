@@ -68,6 +68,7 @@ public class WorkspaceAdapter extends BaseAdapter{
         }else{
             holder = (WorkspaceHolder) convertView.getTag();
         }
+
         holder.title.setText(project.getName());
 
 	    String author = project.getAuthor();
