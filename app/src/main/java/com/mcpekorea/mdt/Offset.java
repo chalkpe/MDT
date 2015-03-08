@@ -1,5 +1,5 @@
 package com.mcpekorea.mdt;
-import java.util.List;
+import org.json.JSONArray;
 
 /**
  * @since 2015-03-06
@@ -10,9 +10,13 @@ public class Offset extends Value {
 
 	public Offset(byte[] bytes){
 		super(bytes);
-
 		setBytes(bytes);
 	}
+
+    public Offset(Value value){
+        super(value.getBytes());
+        setBytes(value.getBytes());
+    }
 
 	@Override
 	public void setBytes(byte[] bytes) {
@@ -20,21 +24,20 @@ public class Offset extends Value {
 			throw new NullPointerException("bytes must not be null");
 		}
 
-		if(bytes.length != 4){
+		if(bytes.length != SIZE){
 			byte[] curBin = getBytes();
 			if(curBin != null){
 				byte[] tmp = new byte[4];
-				System.arraycopy(curBin, 0, tmp, Math.max(4 - bytes.length, 0), (bytes.length < 4) ? bytes.length : 4);
+				System.arraycopy(curBin, 0, tmp, Math.max(SIZE - bytes.length, 0), (bytes.length < SIZE) ? bytes.length : SIZE);
 				bytes = tmp;
 			}else{
-				byte[] tmp = new byte[4];
+				byte[] tmp = new byte[SIZE];
 				for(int i = 0; i < bytes.length; i++){
 					tmp[i] = bytes[i];
 				}
-				System.arraycopy(bytes, 0, tmp, Math.max(4 - bytes.length, 0), (bytes.length < 4) ? bytes.length : 4);
+				System.arraycopy(bytes, 0, tmp, Math.max(SIZE - bytes.length, 0), (bytes.length < SIZE) ? bytes.length : SIZE);
 			}
 		}
-
 		super.setBytes(bytes);
 	}
 
@@ -42,4 +45,8 @@ public class Offset extends Value {
 	public boolean equals(Object o) {
 		return o instanceof Offset && super.equals(o);
 	}
+
+    public static Offset createFromJSON(JSONArray array){
+        return new Offset(Value.createFromJSON(array));
+    }
 }

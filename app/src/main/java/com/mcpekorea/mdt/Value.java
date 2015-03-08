@@ -1,9 +1,9 @@
 package com.mcpekorea.mdt;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONException;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @since 2015-03-06
@@ -38,11 +38,25 @@ public class Value {
 
 	@Override
 	public boolean equals(Object o) {
-		return o instanceof Value && this.bytes.equals(((Value) o).bytes);
+		return o instanceof Value && Arrays.equals(this.bytes, ((Value) o).bytes);
 	}
+
+    public static Value createFromJSON(JSONArray array){
+        try{
+            byte[] bytes = new byte[array.length()];
+            for(int i = 0; i < array.length(); i++){
+                bytes[i] = (byte) array.getInt(i);
+            }
+            return new Value(bytes);
+        }catch(JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 	public JSONArray toJSON(){
 		JSONArray array = new JSONArray();
-		for(Byte b : bytes){
+		for(byte b : bytes){
 			array.put(b);
 		}
 		return array;
