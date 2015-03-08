@@ -73,7 +73,7 @@ public class CreateWorkspaceActivity extends ActionBarActivity {
 
     public void showCancelDialog(){
         new AlertDialog.Builder(this)
-                .setTitle(R.string.action_cancel)
+                .setTitle(android.R.string.cancel)
                 .setIcon(R.drawable.ic_clear_black_48dp)
                 .setMessage(R.string.dialog_cancel)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
