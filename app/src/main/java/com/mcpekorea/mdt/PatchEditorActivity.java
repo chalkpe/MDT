@@ -1,10 +1,18 @@
 package com.mcpekorea.mdt;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * @since 2015-03-08
@@ -35,5 +43,38 @@ public class PatchEditorActivity extends ActionBarActivity {
 				adapter.addPatch(patch);
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		getMenuInflater().inflate(R.menu.menu_patch_editor, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		int id = item.getItemId();
+		if(id == R.id.menu_export_project){
+			if(this.project.getPatchesCount() == 0){
+				Toast.makeText(this, R.string.project_empty, Toast.LENGTH_LONG).show();
+				return true;
+			}
+
+			ProjectExporter exporter = new ProjectExporter(this.project);
+			try {
+				byte[] buffer = exporter.create();
+				FileOutputStream fos = new FileOutputStream(new File(MainActivity.EXPORT_DIRECTORY, project.getName()+".mod"));
+				fos.write(buffer);
+				fos.close();
+				Toast.makeText(this, R.string.project_exported, Toast.LENGTH_LONG).show();
+			}catch(IOException e){
+				new AlertDialog.Builder(this)
+				.setTitle(R.string.error_occurred)
+				.setMessage(e.getMessage())
+				.setPositiveButton(android.R.string.yes, null).show();
+			}
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

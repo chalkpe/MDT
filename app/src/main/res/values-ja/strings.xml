@@ -20,4 +20,9 @@
     <string name="error_empty">%sを空白にすることはできません！</string>
 
     <string name="default_authorName">不明</string>
+
+    <string name="error_occurred">エラーが発生しました</string>
+
+    <string name="project_empty">プロジェクトが空いています。</string>
+    <string name="project_exported">プロジェクトを成功的に出しました。</string>
 </resources>

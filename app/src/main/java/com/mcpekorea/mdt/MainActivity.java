@@ -147,7 +147,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.menu_settings){
-            Toast.makeText(getApplicationContext(), "Settings is not available now", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, SettingActivity.class);
+	        startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -20,4 +20,9 @@
     <string name="error_empty">%s cannot be empty!</string>
 
     <string name="default_authorName">Unknown</string>
+
+    <string name="error_occurred">Error occurred</string>
+
+    <string name="project_empty">Project is empty.</string>
+    <string name="project_exported">Project was exported successfully.</string>
 </resources>
