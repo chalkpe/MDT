@@ -6,14 +6,17 @@ import org.json.JSONObject;
 /**
  * @since 2015-03-06
  * @author ChalkPE <amato0617@gmail.com>
+ * @author onebone<jyc0410@naver.com>
  */
 public class Patch {
 	private Offset offset;
 	private Value value;
+	private boolean isExcluded;
 
     public Patch(Offset offset, Value value) {
         this.offset = offset;
         this.value = value;
+	    this.isExcluded = false;
     }
 
     public Offset getOffset() {
@@ -30,6 +33,18 @@ public class Patch {
 
 	public void setValue(Value value) {
 		this.value = value;
+	}
+
+	public void exclude(){
+		this.isExcluded = true;
+	}
+
+	public void include(){
+		this.isExcluded = false;
+	}
+
+	public boolean isExcluded(){
+		return this.isExcluded;
 	}
 
 	@Override
