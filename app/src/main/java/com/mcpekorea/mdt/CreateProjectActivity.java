@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 
-public class CreateWorkspaceActivity extends ActionBarActivity {
+public class CreateProjectActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

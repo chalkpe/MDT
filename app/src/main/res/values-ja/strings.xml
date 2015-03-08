@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MDT</string>
-    <string name="title_activity_create_workspace">ワークスペースを生成</string>
+    <string name="title_activity_create_workspace">プロジェクトを生成</string>
 
     <string name="action_settings">設定</string>
     <string name="action_create">生成</string>
 
     <string name="create_workspace_project_name">プロジェクト名</string>
-    <string name="create_workspace_author_name">作成者名</string>
+    <string name="create_workspace_author_name">制作者名</string>
 
-    <string name="dialog_cancel">本当にセーブせずに閉じてもいいですか？</string>
+    <string name="dialog_cancel">本当に貯蔵しなくて閉じてもいいですか？</string>
 
     <string name="error_empty">%sを空白にすることはできません！</string>
 
