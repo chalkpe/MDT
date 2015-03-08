@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class PatchEditorActivity extends ActionBarActivity {
 	private Project project;
 	private ListView patchesView;
 	private ProjectAdapter adapter;
+	private EditText authorArea;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -32,6 +34,9 @@ public class PatchEditorActivity extends ActionBarActivity {
 		project = (Project)data.getSerializableExtra("project");
 
 		setTitle(project.getName());
+
+		authorArea = (EditText)findViewById(R.id.author_area);
+		authorArea.setText(project.getAuthor());
 
 		patchesView = (ListView)findViewById(R.id.list_patches);
 		patchesView.setAdapter((adapter = new ProjectAdapter(this, project.getPatches())));
@@ -59,7 +64,7 @@ public class PatchEditorActivity extends ActionBarActivity {
 				Toast.makeText(this, R.string.project_empty, Toast.LENGTH_LONG).show();
 				return true;
 			}
-
+			this.project.setAuthor(authorArea.getText().toString());
 			ProjectExporter exporter = new ProjectExporter(this.project);
 			try {
 				byte[] buffer = exporter.create();
