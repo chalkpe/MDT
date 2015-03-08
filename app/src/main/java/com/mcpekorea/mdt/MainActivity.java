@@ -1,14 +1,11 @@
 package com.mcpekorea.mdt;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,10 +19,17 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.main_list);
 
 	    adapter = new WorkspaceAdapter(this, null);
         listView.setAdapter(adapter);
+
+        findViewById(R.id.main_fab_add).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startActivityForResult(new Intent(v.getContext(), CreateWorkspaceActivity.class), 0);
+            }
+        });
     }
 
     @Override
@@ -37,31 +41,21 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.menu_add_item){
-	        final LinearLayout layout = (LinearLayout) View.inflate(this, R.layout.workspace_creator_layout, null);
-	        new AlertDialog.Builder(this)
-			.setView(layout)
-			.setTitle("Project specification")
-			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface d, int position) {
-					EditText nameArea = (EditText) layout.findViewById(R.id.name_area);
-					String name = nameArea.getText().toString();
-					if (name.equals("")) {
-						Toast.makeText(MainActivity.this, "Project name cannot be blank.", Toast.LENGTH_LONG).show();
-						return;
-					}
-
-					EditText authorArea = (EditText)layout.findViewById(R.id.author_area);
-					String author = authorArea.getText().toString();
-					Project project = new Project(name, author);
-
-					adapter.addProject(project);
-					adapter.notifyDataSetChanged();
-				}
-			}).show();
-	        return true;
+        if(id == R.id.menu_settings){
+            Toast.makeText(getApplicationContext(), "Settings is not available now", Toast.LENGTH_SHORT).show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            Project project = new Project(data.getStringExtra("projectName"), data.getStringExtra("authorName"));
+
+            adapter.addProject(project);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
