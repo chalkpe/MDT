@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateWorkspaceActivity"
+            android:name=".CreateProjectActivity"
             android:label="@string/title_activity_create_workspace" >
         </activity>
     </application>
