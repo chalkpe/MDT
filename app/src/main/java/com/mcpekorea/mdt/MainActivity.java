@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
         findViewById(R.id.main_fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(v.getContext(), CreateWorkspaceActivity.class), 0);
+                startActivityForResult(new Intent(v.getContext(), CreateProjectActivity.class), 0);
             }
         });
 
