@@ -4,7 +4,7 @@
     tools:context=".CreateWorkspaceActivity">
 
     <item android:id="@+id/menu_cancel"
-        android:title="@string/action_cancel"
+        android:title="@android:string/cancel"
         android:icon="@drawable/ic_clear_black_48dp"
         app:showAsAction="ifRoom" />
 

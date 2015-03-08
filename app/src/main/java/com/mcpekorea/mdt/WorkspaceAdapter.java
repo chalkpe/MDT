@@ -59,9 +59,11 @@ public class WorkspaceAdapter extends BaseAdapter{
 
         if(convertView == null){
             convertView = this.inflater.inflate(R.layout.list_item, parent, false);
+
             holder = new WorkspaceHolder();
             holder.title = (TextView) convertView.findViewById(R.id.list_item_title);
             holder.subtitle = (TextView) convertView.findViewById(R.id.list_item_subtitle);
+
             convertView.setTag(holder);
         }else{
             holder = (WorkspaceHolder) convertView.getTag();
