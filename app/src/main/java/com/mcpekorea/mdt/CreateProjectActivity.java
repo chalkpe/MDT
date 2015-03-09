@@ -40,6 +40,13 @@ public class CreateProjectActivity extends ActionBarActivity {
                     return true;
                 }
 
+                for(Project project : WorkspaceActivity.projects){
+                    if(project.getName().equalsIgnoreCase(projectName)){
+                        projectNameArea.setError(String.format(getText(R.string.error_project_already_exists).toString(), projectName));
+                        return true;
+                    }
+                }
+
                 if(authorName == null || authorName.equals("")){
                     authorName = getText(R.string.default_authorName).toString();
                 }
@@ -73,9 +80,9 @@ public class CreateProjectActivity extends ActionBarActivity {
 
     public void showCancelDialog(){
         new AlertDialog.Builder(this)
-                .setTitle(android.R.string.cancel)
+                .setTitle(R.string.dialog_title_close)
                 .setIcon(R.drawable.ic_clear_black_48dp)
-                .setMessage(R.string.dialog_message_cancel)
+                .setMessage(R.string.dialog_message_close_without_saving)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

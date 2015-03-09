@@ -1,15 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".CreateProjectActivity">
+    tools:context=".CreatePatchActivity">
 
     <item android:id="@+id/menu_cancel"
         android:title="@android:string/cancel"
         android:icon="@drawable/ic_clear_black_48dp"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/menu_create"
-        android:title="@string/action_create"
+    <item android:id="@+id/menu_delete"
+        android:title="@string/action_delete"
+        android:icon="@drawable/ic_delete_black_48dp"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/menu_save"
+        android:title="@string/action_save"
         android:icon="@drawable/ic_save_black_48dp"
         app:showAsAction="ifRoom" />
 </menu>

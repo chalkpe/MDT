@@ -31,7 +31,7 @@ public class Value {
 	public String toString() {
 		StringBuilder sb = new StringBuilder(bytes.length * 2);
 		for(Byte b : bytes){
-			sb.append(String.format("%02x", b & 0xff));
+			sb.append(String.format("%02X", b & 0xff));
 		}
 		return sb.toString();
 	}

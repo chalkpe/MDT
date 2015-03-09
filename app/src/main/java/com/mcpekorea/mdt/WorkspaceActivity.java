@@ -22,6 +22,8 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 
 public class WorkspaceActivity extends ActionBarActivity {
@@ -29,9 +31,10 @@ public class WorkspaceActivity extends ActionBarActivity {
     public static final File PROJECTS_DIRECTORY = new File(ROOT_DIRECTORY, "projects");
     public static final File EXPORT_DIRECTORY = new File(ROOT_DIRECTORY, "export");
 
+    public static ArrayList<Project> projects;
+
     private ListView listView;
 	private WorkspaceAdapter adapter;
-    private ArrayList<Project> projects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -59,6 +62,12 @@ public class WorkspaceActivity extends ActionBarActivity {
         if(projectFiles == null || projectFiles.length == 0){
             projects = new ArrayList<>();
         }else{
+            Arrays.sort(projectFiles, new Comparator<File>() {
+                public int compare(File a, File b) {
+                    return a.getName().compareToIgnoreCase(b.getName());
+                }
+            });
+
             projects = new ArrayList<>(projectFiles.length);
             for(File file : projectFiles){
                 try{
@@ -80,42 +89,42 @@ public class WorkspaceActivity extends ActionBarActivity {
 				new AlertDialog.Builder(WorkspaceActivity.this)
                         .setTitle(project.getName())
                         .setNegativeButton(android.R.string.cancel, null)
-                        .setNeutralButton(R.string.dialog_text_delete, new DialogInterface.OnClickListener(){
+                        .setNeutralButton(R.string.dialog_text_delete, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface d, int i){
-						        new AlertDialog.Builder(WorkspaceActivity.this)
-						                .setTitle(R.string.dialog_title_confirm_delete)
-						                .setMessage(String.format(getResources().getString(R.string.dialog_message_confirm_delete), project.getName()))
-						                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
-							                @Override
-							                public void onClick(DialogInterface d, int i){
+                            public void onClick(DialogInterface d, int i) {
+                                new AlertDialog.Builder(WorkspaceActivity.this)
+                                        .setTitle(R.string.dialog_title_confirm_delete)
+                                        .setMessage(String.format(getResources().getString(R.string.dialog_message_confirm_project_delete), project.getName()))
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface d, int i) {
                                                 projects.remove(position);
                                                 adapter.notifyDataSetChanged();
 
                                                 File file = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
 
                                                 boolean succeed = false;
-                                                if(file.exists()){
+                                                if (file.exists()) {
                                                     succeed = file.delete();
                                                 }
 
-                                                if(succeed){
-                                                    Toast.makeText(WorkspaceActivity.this, String.format(getResources().getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
+                                                if (succeed) {
+                                                    Toast.makeText(WorkspaceActivity.this, String.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
                                                 }
-							                }
-						                })
-						                .setNegativeButton(android.R.string.cancel, null)
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, null)
                                         .show();
-					        }
-				        })
-				        .setPositiveButton(R.string.dialog_text_open, new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface d, int i){
-                                Intent intent = new Intent(WorkspaceActivity.this, ProjectActivity.class);
-                                intent.putExtra("project", project);
-                                startActivity(intent);
                             }
-				        })
+                        })
+				        .setPositiveButton(R.string.dialog_text_open, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface d, int i) {
+                                Intent intent = new Intent(WorkspaceActivity.this, ProjectActivity.class);
+                                intent.putExtra("projectIndex", position);
+                                startActivityForResult(intent, 1);
+                            }
+                        })
                         .show();
 		    }
 	    });
@@ -140,17 +149,20 @@ public class WorkspaceActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == 0 && resultCode == RESULT_OK){
             Project project = new Project(data.getStringExtra("projectName"), data.getStringExtra("authorName"));
 
             adapter.addProject(project);
             adapter.notifyDataSetChanged();
+        }else if(requestCode == 1 && resultCode == RESULT_OK){
+            adapter.notifyDataSetChanged();
         }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         for(Project project : projects){
             File projectFile = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
             BufferedWriter bw = null;

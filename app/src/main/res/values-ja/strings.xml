@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">MDT</string>
     <string name="title_activity_create_project">プロジェクトを生成</string>
+    <string name="title_activity_create_patch">パッチを生成</string>
+    <string name="title_activity_edit_patch">パッチを編集</string>
     <string name="title_activity_settings">設定</string>
     <string name="title_activity_project">プロジェクト</string>
 
@@ -9,24 +11,34 @@
     <string name="action_create">生成</string>
     <string name="action_export">出す</string>
     <string name="action_change_author_name">制作者名を変更</string>
+    <string name="action_save">貯蔵</string>
+    <string name="action_delete">削除</string>
 
     <string name="dialog_text_open">開く</string>
     <string name="dialog_text_delete">削除</string>
 
+    <string name="dialog_title_close">閉じる</string>
     <string name="dialog_title_confirm_delete">本当ですか？</string>
     <string name="dialog_title_error_occurred">エラーが発生しました</string>
 
-    <string name="dialog_message_cancel">本当に貯蔵しなくて閉じてもいいですか？</string>
-    <string name="dialog_message_confirm_delete">プロジェクト%sを消してもいいですか？削除すれば復旧することはできません。</string>
+    <string name="dialog_message_close_without_saving">本当に貯蔵しなくて閉じてもいいですか？</string>
+    <string name="dialog_message_confirm_patch_delete">このパッチを消してもいいですか？削除すれば復旧することはできません。</string>
+    <string name="dialog_message_confirm_project_delete">プロジェクト%sを消してもいいですか？削除すれば復旧することはできません。</string>
 
+    <string name="toast_patch_deleted">そのパッチを成功的に削除しました。</string>
     <string name="toast_project_deleted">プロジェクト%sを成功的に削除しました。</string>
     <string name="toast_project_empty">プロジェクトが空いています。</string>
     <string name="toast_project_exported">プロジェクトを成功的に出しました。</string>
 
     <string name="error_empty">%sを空白にすることはできません！</string>
+    <string name="error_project_already_exists">プロジェクト%sはすでに存在しています！</string>
 
     <string name="create_project_project_name">プロジェクト名</string>
     <string name="create_project_author_name">制作者名</string>
 
+    <string name="create_patch_offset">オフセット</string>
+    <string name="create_patch_value">値</string>
+
     <string name="default_authorName">不明</string>
+    <string name="default_value">7047</string>
 </resources>

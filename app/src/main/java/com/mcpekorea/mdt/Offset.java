@@ -27,7 +27,7 @@ public class Offset extends Value {
 		if(bytes.length != SIZE){
 			byte[] curBin = getBytes();
 			if(curBin != null){
-				byte[] tmp = new byte[4];
+				byte[] tmp = new byte[SIZE];
 				System.arraycopy(curBin, 0, tmp, Math.max(SIZE - bytes.length, 0), (bytes.length < SIZE) ? bytes.length : SIZE);
 				bytes = tmp;
 			}else{

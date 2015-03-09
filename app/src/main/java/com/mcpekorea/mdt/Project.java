@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  * @since 2015-03-06
  * @author ChalkPE <amato0617@gmail.com>
  */
-public class Project implements Serializable{
+public class Project {
 	private String name;
 	private String author;
 	private List<Patch> patches;
@@ -99,7 +98,7 @@ public class Project implements Serializable{
             String author = object.getString("author");
 
             JSONArray array = object.getJSONArray("patches");
-            ArrayList<Patch> patches = new ArrayList<Patch>(array.length());
+            ArrayList<Patch> patches = new ArrayList<>(array.length());
             for(int i = 0; i < array.length(); i++){
                 patches.add(Patch.createFromJSON(array.getJSONObject(i)));
             }

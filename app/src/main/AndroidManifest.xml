@@ -28,6 +28,10 @@
             android:label=".PatchEditorActivity">
         </activity>
         <activity
+            android:name=".CreatePatchActivity"
+            android:label="@string/title_activity_create_patch" >
+        </activity>
+        <activity
             android:name=".SettingsActivity"
             android:label="">
         </activity>

@@ -5,9 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @since 2015-03-08
@@ -31,21 +35,37 @@ public class ProjectActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_project);
 
-		Intent data = getIntent();
-		project = (Project) data.getSerializableExtra("project");
+		Bundle bundle = getIntent().getExtras();
+		project = WorkspaceActivity.projects.get(bundle.getInt("projectIndex"));
 
 		setTitle(project.getName());
+
+        findViewById(R.id.project_fab_add).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(v.getContext(), CreatePatchActivity.class);
+                intent.putExtra("patchIndex", -1);
+
+                startActivityForResult(intent, 0);
+            }
+        });
 
         listView = (ListView) findViewById(R.id.project_list);
         listView.setAdapter((adapter = new ProjectAdapter(this, project.getPatches())));
 
-		findViewById(R.id.project_fab_add).setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v){
-				Patch patch = new Patch(new Offset(new byte[]{0x00, 0x00, 0x00, 0x00}), new Value(new byte[]{0x00, 0x00}));
-				adapter.addPatch(patch);
-			}
-		});
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Patch patch = project.getPatches().get(position);
+
+                Intent intent = new Intent(view.getContext(), CreatePatchActivity.class);
+                intent.putExtra("patchIndex", position);
+                intent.putExtra("offsetString", patch.getOffset().toString());
+                intent.putExtra("valueString", patch.getValue().toString());
+
+                startActivityForResult(intent, 1);
+            }
+        });
 	}
 
 	@Override
@@ -68,7 +88,7 @@ public class ProjectActivity extends ActionBarActivity {
 
 			try {
 				byte[] bytes = exporter.create();
-				fos = new FileOutputStream(new File(WorkspaceActivity.EXPORT_DIRECTORY, project.getName()+".mod"));
+				fos = new FileOutputStream(new File(WorkspaceActivity.EXPORT_DIRECTORY, project.getName() + ".mod"));
 				fos.write(bytes);
 
 				Toast.makeText(this, R.string.toast_project_exported, Toast.LENGTH_LONG).show();
@@ -108,4 +128,62 @@ public class ProjectActivity extends ActionBarActivity {
         }
 		return super.onOptionsItemSelected(item);
 	}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0 && resultCode == RESULT_OK){
+            adapter.addPatch(createPatchFromBundle(data.getExtras()));
+            adapter.notifyDataSetChanged();
+        }else if(requestCode == 1 && resultCode == RESULT_OK){
+            int patchIndex = data.getIntExtra("patchIndex", -1);
+            if(patchIndex >= 0){
+                if(data.getBooleanExtra("deleted", false)){
+                    project.getPatches().remove(patchIndex);
+                    adapter.notifyDataSetChanged();
+
+                    Toast.makeText(this, R.string.toast_patch_deleted, Toast.LENGTH_LONG).show();
+                }else{
+                    project.getPatches().set(patchIndex, createPatchFromBundle(data.getExtras()));
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            setResult(RESULT_OK);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public static List<String> splitEqually(String text, int size) {
+        List<String> list = new ArrayList<>((text.length() + size - 1) / size);
+
+        for (int start = 0; start < text.length(); start += size) {
+            list.add(text.substring(start, Math.min(text.length(), start + size)));
+        }
+        return list;
+    }
+
+    public Patch createPatchFromBundle(Bundle bundle){
+        List<String> offsetStrings = splitEqually(bundle.getString("offsetString"), 2);
+        List<String> valueStrings = splitEqually(bundle.getString("valueString"), 2);
+
+        byte[] offsetBytes = new byte[offsetStrings.size()];
+        byte[] valueBytes = new byte[valueStrings.size()];
+
+        for(int i = 0; i < offsetStrings.size(); i++){
+            offsetBytes[i] = (byte) Integer.parseInt(offsetStrings.get(i), 16);
+        }
+        for(int i = 0; i < valueStrings.size(); i++){
+            valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
+        }
+
+        return new Patch(new Offset(offsetBytes), new Value(valueBytes));
+    }
 }

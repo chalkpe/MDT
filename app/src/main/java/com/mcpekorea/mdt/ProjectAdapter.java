@@ -35,14 +35,7 @@ public class ProjectAdapter extends BaseAdapter{
 	}
 
 	public void addPatch(Patch patch){
-		addPatch(patch, true);
-	}
-
-	public void addPatch(Patch patch, boolean update){
 		this.patches.add(patch);
-		if(update){
-			this.notifyDataSetChanged();
-		}
 	}
 
 	@Override
