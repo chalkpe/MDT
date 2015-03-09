@@ -6,7 +6,7 @@ import org.json.JSONObject;
 /**
  * @since 2015-03-06
  * @author ChalkPE <amato0617@gmail.com>
- * @author onebone<jyc0410@naver.com>
+ * @author onebone <jyc0410@naver.com>
  */
 public class Patch {
 	private Offset offset;
@@ -55,7 +55,7 @@ public class Patch {
     public static Patch createFromJSON(JSONObject object){
         try{
             Offset offset = Offset.createFromJSON(object.getJSONArray("offset"));
-            Value value = Offset.createFromJSON(object.getJSONArray("value"));
+            Value value = Value.createFromJSON(object.getJSONArray("value"));
 
             return new Patch(offset, value);
         }catch(JSONException e){
@@ -74,5 +74,4 @@ public class Patch {
 		}
 		return object;
 	}
-
 }
