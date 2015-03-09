@@ -155,33 +155,17 @@ public class WorkspaceActivity extends ActionBarActivity {
 
             adapter.addProject(project);
             adapter.notifyDataSetChanged();
+            saveProjects();
         }else if(requestCode == 1 && resultCode == RESULT_OK){
             adapter.notifyDataSetChanged();
+            saveProjects();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for(Project project : projects){
-            File projectFile = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
-            BufferedWriter bw = null;
-
-            try{
-                bw = new BufferedWriter(new FileWriter(projectFile));
-                bw.write(project.toJSON().toString());
-            }catch(IOException e){
-                e.printStackTrace();
-            }finally{
-                try{
-                    if(bw != null){
-                        bw.close();
-                    }
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }
+        saveProjects();
     }
 
     public void initDirectories(){
@@ -208,6 +192,28 @@ public class WorkspaceActivity extends ActionBarActivity {
 
         if(succeed){
             Log.d(getText(R.string.app_name).toString(), "Directories are created!");
+        }
+    }
+
+    public void saveProjects(){
+        for(Project project : projects){
+            File projectFile = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
+            BufferedWriter bw = null;
+
+            try{
+                bw = new BufferedWriter(new FileWriter(projectFile));
+                bw.write(project.toJSON().toString());
+            }catch(IOException e){
+                e.printStackTrace();
+            }finally{
+                try{
+                    if(bw != null){
+                        bw.close();
+                    }
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
