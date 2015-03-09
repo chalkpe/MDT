@@ -24,20 +24,15 @@ public class Offset extends Value {
 			throw new NullPointerException("bytes must not be null");
 		}
 
-		if(bytes.length != SIZE){
-			byte[] curBin = getBytes();
-			if(curBin != null){
-				byte[] tmp = new byte[SIZE];
-				System.arraycopy(curBin, 0, tmp, Math.max(SIZE - bytes.length, 0), (bytes.length < SIZE) ? bytes.length : SIZE);
-				bytes = tmp;
-			}else{
-				byte[] tmp = new byte[SIZE];
-				for(int i = 0; i < bytes.length; i++){
-					tmp[i] = bytes[i];
-				}
-				System.arraycopy(bytes, 0, tmp, Math.max(SIZE - bytes.length, 0), (bytes.length < SIZE) ? bytes.length : SIZE);
-			}
-		}
+        if(bytes.length > SIZE){
+            byte[] newBytes = new byte[SIZE];
+            System.arraycopy(bytes, bytes.length - SIZE, newBytes, 0, 4);
+            bytes = newBytes;
+        }else if(bytes.length < SIZE){
+            byte[] newBytes = {0x00, 0x00, 0x00, 0x00};
+            System.arraycopy(bytes, 0, newBytes, SIZE - bytes.length, bytes.length);
+            bytes = newBytes;
+        }
 		super.setBytes(bytes);
 	}
 
