@@ -16,12 +16,12 @@ public class CreateProjectActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_workspace);
+        setContentView(R.layout.activity_create_project);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_workspace, menu);
+        getMenuInflater().inflate(R.menu.menu_create_project, menu);
         return true;
     }
 
@@ -29,14 +29,14 @@ public class CreateProjectActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.menu_create:
-                EditText projectNameArea = (EditText) findViewById(R.id.create_workspace_project_name);
-                EditText authorNameArea = (EditText) findViewById(R.id.create_workspace_author_name);
+                EditText projectNameArea = (EditText) findViewById(R.id.create_project_project_name);
+                EditText authorNameArea = (EditText) findViewById(R.id.create_project_author_name);
 
                 String projectName = projectNameArea.getText().toString();
                 String authorName = authorNameArea.getText().toString();
 
                 if(projectName == null || projectName.equals("")){
-                    projectNameArea.setError(String.format(getText(R.string.error_empty).toString(), getText(R.string.create_workspace_project_name).toString()));
+                    projectNameArea.setError(String.format(getText(R.string.error_empty).toString(), getText(R.string.create_project_project_name).toString()));
                     return true;
                 }
 
@@ -75,7 +75,7 @@ public class CreateProjectActivity extends ActionBarActivity {
         new AlertDialog.Builder(this)
                 .setTitle(android.R.string.cancel)
                 .setIcon(R.drawable.ic_clear_black_48dp)
-                .setMessage(R.string.dialog_cancel)
+                .setMessage(R.string.dialog_message_cancel)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

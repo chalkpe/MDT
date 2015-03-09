@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +24,9 @@ public class ProjectAdapter extends BaseAdapter{
 		if(context == null){
 			throw new NullPointerException("context must not be null");
 		}
-		if(patches == null){
-			patches = new ArrayList<>();
-		}
+        if(patches == null){
+            throw new NullPointerException("patches must not be null");
+        }
 
 		this.context = context;
 		this.patches = patches;
@@ -41,7 +40,7 @@ public class ProjectAdapter extends BaseAdapter{
 
 	public void addPatch(Patch patch, boolean update){
 		this.patches.add(patch);
-		if(update) {
+		if(update){
 			this.notifyDataSetChanged();
 		}
 	}
@@ -67,11 +66,11 @@ public class ProjectAdapter extends BaseAdapter{
 		ProjectHolder holder;
 
 		if(convertView == null){
-			convertView = this.inflater.inflate(R.layout.list_patches, parent, false);
+			convertView = this.inflater.inflate(R.layout.list_item, parent, false);
 
 			holder = new ProjectHolder();
-			holder.offset = (TextView) convertView.findViewById(R.id.list_item_offset);
-			holder.value = (TextView) convertView.findViewById(R.id.list_item_value);
+			holder.offset = (TextView) convertView.findViewById(R.id.list_item_title);
+			holder.value = (TextView) convertView.findViewById(R.id.list_item_subtitle);
 
 			convertView.setTag(holder);
 		}else{

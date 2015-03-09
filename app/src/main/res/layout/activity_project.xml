@@ -5,20 +5,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/author_area"
-        android:lines="1"
-        android:hint="@string/create_workspace_author_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
     <ListView
-        android:layout_below="@id/author_area"
-        android:id="@+id/list_patches"
+        android:id="@+id/project_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_patch_btn"
+        android:id="@+id/project_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_icon="@drawable/ic_add_black_48dp"
