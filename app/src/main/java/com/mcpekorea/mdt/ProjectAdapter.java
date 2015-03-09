@@ -65,6 +65,9 @@ public class ProjectAdapter extends BaseAdapter{
 			holder.offset = (TextView) convertView.findViewById(R.id.list_item_title);
 			holder.value = (TextView) convertView.findViewById(R.id.list_item_subtitle);
 
+            holder.offset.setTypeface(WorkspaceActivity.inconsolataBold);
+            holder.value.setTypeface(WorkspaceActivity.inconsolata);
+
 			convertView.setTag(holder);
 		}else{
 			holder = (ProjectHolder) convertView.getTag();

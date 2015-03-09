@@ -3,6 +3,7 @@ package com.mcpekorea.mdt;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -22,6 +23,9 @@ public class CreatePatchActivity extends ActionBarActivity {
 
         offsetArea = (EditText) findViewById(R.id.create_patch_offset);
         valueArea = (EditText) findViewById(R.id.create_patch_value);
+
+        offsetArea.setTypeface(WorkspaceActivity.inconsolata, Typeface.BOLD);
+        valueArea.setTypeface(WorkspaceActivity.inconsolata);
 
         Bundle bundle = getIntent().getExtras();
         patchIndex = bundle.getInt("patchIndex", -1);

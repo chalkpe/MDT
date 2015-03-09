@@ -38,7 +38,4 @@
 
     <string name="create_patch_offset">オフセット</string>
     <string name="create_patch_value">値</string>
-
-    <string name="default_authorName">不明</string>
-    <string name="default_value">7047</string>
 </resources>

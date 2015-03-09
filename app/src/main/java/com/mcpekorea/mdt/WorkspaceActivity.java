@@ -3,6 +3,7 @@ package com.mcpekorea.mdt;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class WorkspaceActivity extends ActionBarActivity {
     public static final File ROOT_DIRECTORY = new File(Environment.getExternalStorageDirectory(), "MDT");
     public static final File PROJECTS_DIRECTORY = new File(ROOT_DIRECTORY, "projects");
     public static final File EXPORT_DIRECTORY = new File(ROOT_DIRECTORY, "export");
+    public static Typeface inconsolata, inconsolataBold;
 
     public static ArrayList<Project> projects;
 
@@ -42,6 +44,8 @@ public class WorkspaceActivity extends ActionBarActivity {
         setContentView(R.layout.activity_workspace);
 
         initDirectories();
+        inconsolata = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Regular.ttf");
+        inconsolataBold = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Bold.ttf");
 
         findViewById(R.id.workspace_fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
