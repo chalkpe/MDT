@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.mcpekorea.hangul.Hangul;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,7 +33,9 @@ public class WorkspaceActivity extends ActionBarActivity {
     public static final File ROOT_DIRECTORY = new File(Environment.getExternalStorageDirectory(), "MDT");
     public static final File PROJECTS_DIRECTORY = new File(ROOT_DIRECTORY, "projects");
     public static final File EXPORT_DIRECTORY = new File(ROOT_DIRECTORY, "export");
+
     public static Typeface inconsolata, inconsolataBold;
+    public static String[] samples;
 
     public static ArrayList<Project> projects;
 
@@ -43,9 +47,8 @@ public class WorkspaceActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace);
 
+        initResources();
         initDirectories();
-        inconsolata = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Regular.ttf");
-        inconsolataBold = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Bold.ttf");
 
         findViewById(R.id.workspace_fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +101,7 @@ public class WorkspaceActivity extends ActionBarActivity {
                             public void onClick(DialogInterface d, int i) {
                                 new AlertDialog.Builder(WorkspaceActivity.this)
                                         .setTitle(R.string.dialog_title_confirm_delete)
-                                        .setMessage(String.format(getResources().getString(R.string.dialog_message_confirm_project_delete), project.getName()))
+                                        .setMessage(Hangul.format(getResources().getString(R.string.dialog_message_confirm_project_delete), project.getName()))
                                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface d, int i) {
@@ -113,7 +116,7 @@ public class WorkspaceActivity extends ActionBarActivity {
                                                 }
 
                                                 if (succeed) {
-                                                    Toast.makeText(WorkspaceActivity.this, String.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(WorkspaceActivity.this, Hangul.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
                                                 }
                                             }
                                         })
@@ -155,7 +158,7 @@ public class WorkspaceActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 0 && resultCode == RESULT_OK){
-            Project project = new Project(data.getStringExtra("projectName"), data.getStringExtra("authorName"));
+            Project project = new Project(data.getStringExtra("projectName").trim(), data.getStringExtra("authorName").trim());
 
             adapter.addProject(project);
             adapter.notifyDataSetChanged();
@@ -170,6 +173,13 @@ public class WorkspaceActivity extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
         saveProjects();
+    }
+
+    public void initResources(){
+        inconsolata = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Regular.ttf");
+        inconsolataBold = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Bold.ttf");
+
+        samples = getResources().getStringArray(R.array.samples);
     }
 
     public void initDirectories(){

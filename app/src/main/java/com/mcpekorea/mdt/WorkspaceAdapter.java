@@ -79,12 +79,10 @@ public class WorkspaceAdapter extends BaseAdapter{
 
         holder.title.setText(project.getName());
 
-	    String author = project.getAuthor();
-	    if(author.equals("")){
-		    author = context.getText(R.string.default_authorName).toString();
+	    if(project.getAuthor().equals("")){
+            project.setAuthor(context.getText(R.string.default_authorName).toString());
 	    }
-
-        holder.subtitle.setText(String.format("%d patches, by %s", project.getPatchesCount(), author));
+        holder.subtitle.setText(String.format(context.getText(R.string.workspace_project_information).toString(), project.getPatchesCount(), project.getAuthor()));
 
         return convertView;
     }

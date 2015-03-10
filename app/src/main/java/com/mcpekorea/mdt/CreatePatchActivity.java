@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.mcpekorea.hangul.Hangul;
 
 public class CreatePatchActivity extends ActionBarActivity {
     private int patchIndex;
@@ -51,7 +52,7 @@ public class CreatePatchActivity extends ActionBarActivity {
                 String valueString = valueArea.getText().toString();
 
                 if(offsetString == null || offsetString.equals("")){
-                    offsetArea.setError(String.format(getText(R.string.error_empty).toString(), getText(R.string.create_patch_offset).toString()));
+                    offsetArea.setError(Hangul.format(getText(R.string.error_empty).toString(), getText(R.string.create_patch_offset).toString()));
                     return true;
                 }
 

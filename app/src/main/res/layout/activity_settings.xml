@@ -22,7 +22,8 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:overScrollMode="never">
 
             <TextView
                 android:id="@+id/settings_inconsolata_license"
@@ -43,7 +44,8 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:overScrollMode="never">
 
             <TextView
                 android:id="@+id/settings_material_design_icons_license"
@@ -64,7 +66,8 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:overScrollMode="never">
 
             <TextView
                 android:id="@+id/settings_floating_action_button_license"

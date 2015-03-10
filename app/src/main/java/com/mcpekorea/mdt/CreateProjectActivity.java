@@ -10,13 +10,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.mcpekorea.hangul.Hangul;
+
+import java.util.Random;
+
 
 public class CreateProjectActivity extends ActionBarActivity {
+    EditText projectNameArea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
+
+        projectNameArea = (EditText) findViewById(R.id.create_project_project_name);
+        projectNameArea.setText(WorkspaceActivity.samples[new Random().nextInt(WorkspaceActivity.samples.length)]);
     }
 
     @Override
@@ -29,20 +37,19 @@ public class CreateProjectActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.menu_create:
-                EditText projectNameArea = (EditText) findViewById(R.id.create_project_project_name);
                 EditText authorNameArea = (EditText) findViewById(R.id.create_project_author_name);
 
                 String projectName = projectNameArea.getText().toString();
                 String authorName = authorNameArea.getText().toString();
 
                 if(projectName == null || projectName.equals("")){
-                    projectNameArea.setError(String.format(getText(R.string.error_empty).toString(), getText(R.string.create_project_project_name).toString()));
+                    projectNameArea.setError(Hangul.format(getText(R.string.error_empty).toString(), getText(R.string.create_project_project_name).toString()));
                     return true;
                 }
 
                 for(Project project : WorkspaceActivity.projects){
                     if(project.getName().equalsIgnoreCase(projectName)){
-                        projectNameArea.setError(String.format(getText(R.string.error_project_already_exists).toString(), projectName));
+                        projectNameArea.setError(Hangul.format(getText(R.string.error_project_already_exists).toString(), projectName));
                         return true;
                     }
                 }

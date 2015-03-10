@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MDT</string>
+    <!-- MDT : Mod Development Tool -->
+    <string name="app_name" translatable="false">MDT</string>
+
+    <!-- Activity title -->
     <string name="title_activity_create_project">Create project</string>
     <string name="title_activity_create_patch">Create patch</string>
     <string name="title_activity_edit_patch">Edit patch</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_project">Project</string>
 
+    <!-- Action bar item -->
     <string name="action_settings">Settings</string>
     <string name="action_create">Create</string>
     <string name="action_export">Export</string>
@@ -14,38 +18,50 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
 
-    <string name="dialog_text_open">Open</string>
-    <string name="dialog_text_delete">Delete</string>
-
+    <!-- Dialog title -->
     <string name="dialog_title_close">Close</string>
     <string name="dialog_title_confirm_delete">Are you sure?</string>
     <string name="dialog_title_error_occurred">Error occurred</string>
 
+    <!-- Dialog message -->
     <string name="dialog_message_close_without_saving">Are you sure you want to close without saving?</string>
     <string name="dialog_message_confirm_patch_delete">Are you sure to delete this patch? You cannot revert after deletion.</string>
-    <string name="dialog_message_confirm_project_delete">Are you sure to delete project %s? You cannot revert after deletion.</string>
+    <string name="dialog_message_confirm_project_delete" formatted="false">Are you sure to delete project %s? You cannot revert after deletion.</string>
 
+    <!-- Dialog button text -->
+    <string name="dialog_text_open">Open</string>
+    <string name="dialog_text_delete">Delete</string>
+
+    <!-- Toast message -->
     <string name="toast_patch_deleted">That patch was deleted successfully.</string>
-    <string name="toast_project_deleted">Project %s was deleted successfully.</string>
+    <string name="toast_project_deleted" formatted="false">Project %s was deleted successfully.</string>
     <string name="toast_project_empty">Project is empty.</string>
     <string name="toast_project_exported">Project was exported successfully.</string>
 
-    <string name="error_empty">%s cannot be empty!</string>
-    <string name="error_project_already_exists">Project %s is already exists!</string>
+    <!-- EditText error -->
+    <string name="error_empty" formatted="false">%s cannot be empty!</string>
+    <string name="error_project_already_exists" formatted="false">Project %s is already exists!</string>
 
+    <!-- WorkspaceActivity -->
+    <string name="workspace_project_information" formatted="false">%d patches, by %s</string>
+
+    <!-- CreateProjectActivity -->
     <string name="create_project_project_name">Project Name</string>
     <string name="create_project_author_name">Author Name</string>
 
+    <!-- CreatePatchActivity -->
     <string name="create_patch_offset">Offset</string>
     <string name="create_patch_value">Value</string>
 
+    <!-- SettingsActivity -->
+    <string name="settings_inconsolata" translatable="false">Inconsolata font</string>
+    <string name="settings_inconsolata_license" translatable="false">Copyright © 2006 Raph Levien\nUsed under the SIL Open Font License, http://scripts.sil.org/OFL\n\n</string>
+    <string name="settings_material_design_icons" translatable="false">Material-Design-Icons by Google</string>
+    <string name="settings_material_design_icons_license" translatable="false">Used under an Attribution 4.0 International license, http://creativecommons.org/licenses/by/4.0/\n\n</string>
+    <string name="settings_floating_action_button" translatable="false">Android-Floating-Action-Button</string>
+    <string name="settings_floating_action_button_license" translatable="false">Copyright © 2014 Jerzy Chalupski\nLicensed under the Apache License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n\u0020\u0020\u0020\u0020http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n\n</string>
+
+    <!-- Default values -->
     <string name="default_authorName" translatable="false">Unknown</string>
     <string name="default_value" translatable="false">7047</string>
-
-    <string name="settings_inconsolata" translatable="false">Inconsolata</string>
-    <string name="settings_inconsolata_license" translatable="false">Copyright © 2006 Raph Levien\nUsed under the SIL Open Font License, http://scripts.sil.org/OFL</string>
-    <string name="settings_material_design_icons" translatable="false">\nMaterial-Design-Icons by Google</string>
-    <string name="settings_material_design_icons_license" translatable="false">Used under an Attribution 4.0 International license, http://creativecommons.org/licenses/by/4.0/</string>
-    <string name="settings_floating_action_button" translatable="false">\nAndroid-Floating-Action-Button</string>
-    <string name="settings_floating_action_button_license" translatable="false">Copyright © 2014 Jerzy Chalupski\nLicensed under the Apache License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n\u0020\u0020\u0020\u0020http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.</string>
 </resources>
