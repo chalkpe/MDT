@@ -176,15 +176,15 @@ public class WorkspaceActivity extends ActionBarActivity {
         boolean succeed = false;
 
         if(!ROOT_DIRECTORY.exists()) {
-            succeed = ROOT_DIRECTORY.mkdirs();
+            succeed = ROOT_DIRECTORY.mkdir();
         }
 
         if(!PROJECTS_DIRECTORY.exists()) {
-            succeed = succeed || PROJECTS_DIRECTORY.mkdirs();
+            succeed = succeed && PROJECTS_DIRECTORY.mkdir();
         }
 
         if(!EXPORT_DIRECTORY.exists()) {
-            succeed = succeed || EXPORT_DIRECTORY.mkdirs();
+            succeed = succeed && EXPORT_DIRECTORY.mkdir();
         }
 
         try {
