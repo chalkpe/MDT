@@ -119,7 +119,7 @@ public class ProjectActivity extends ActionBarActivity {
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            project.setAuthor(authorArea.getText().toString().trim());
+                            project.setAuthor(authorArea.getText().toString());
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, null)
