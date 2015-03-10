@@ -18,6 +18,7 @@ public class Patch {
         this.offset = offset;
         this.value = value;
 	    this.isExcluded = false;
+	    this.comment = "";
     }
 
 	public Patch(Offset offset, Value value, boolean isExcluded, String comment){
