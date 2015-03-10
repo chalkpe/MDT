@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class ProjectAdapter extends BaseAdapter{
 			holder = new ProjectHolder();
 			holder.offset = (TextView) convertView.findViewById(R.id.list_item_title);
 			holder.value = (TextView) convertView.findViewById(R.id.list_item_subtitle);
+			holder.image = (ImageView) convertView.findViewById(R.id.list_item_image);
 
             holder.offset.setTypeface(WorkspaceActivity.inconsolataBold);
             holder.value.setTypeface(WorkspaceActivity.inconsolata);
@@ -75,6 +77,11 @@ public class ProjectAdapter extends BaseAdapter{
 
 		holder.offset.setText(patch.getOffset().toString());
 		holder.value.setText(patch.getValue().toString());
+		if(patch.isExcluded()) {
+			holder.image.setImageResource(R.drawable.ic_error_black_48dp);
+		}else{
+			holder.image.setImageResource(0);
+		}
 
 		return convertView;
 	}
@@ -82,5 +89,6 @@ public class ProjectAdapter extends BaseAdapter{
 	class ProjectHolder {
 		public TextView offset;
 		public TextView value;
+		public ImageView image;
 	}
 }
