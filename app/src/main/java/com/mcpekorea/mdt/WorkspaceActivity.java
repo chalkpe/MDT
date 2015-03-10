@@ -158,7 +158,7 @@ public class WorkspaceActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 0 && resultCode == RESULT_OK){
-            Project project = new Project(data.getStringExtra("projectName").trim(), data.getStringExtra("authorName").trim());
+            Project project = new Project(data.getStringExtra("projectName"), data.getStringExtra("authorName"));
 
             adapter.addProject(project);
             adapter.notifyDataSetChanged();

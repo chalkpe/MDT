@@ -42,7 +42,7 @@ public class CreateProjectActivity extends ActionBarActivity {
                 String projectName = projectNameArea.getText().toString();
                 String authorName = authorNameArea.getText().toString();
 
-                if(projectName == null || projectName.equals("")){
+                if(projectName == null || (projectName = projectName.trim()).equals("")){
                     projectNameArea.setError(Hangul.format(getText(R.string.error_empty).toString(), getText(R.string.create_project_project_name).toString()));
                     return true;
                 }
@@ -54,7 +54,7 @@ public class CreateProjectActivity extends ActionBarActivity {
                     }
                 }
 
-                if(authorName == null || authorName.equals("")){
+                if(authorName == null || (authorName = authorName.trim()).equals("")){
                     authorName = getText(R.string.default_authorName).toString();
                 }
 
