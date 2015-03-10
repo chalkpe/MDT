@@ -119,7 +119,7 @@ public class ProjectActivity extends ActionBarActivity {
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            project.setAuthor(authorArea.getText().toString());
+                            project.setAuthor(authorArea.getText().toString().trim());
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, null)
@@ -186,4 +186,31 @@ public class ProjectActivity extends ActionBarActivity {
 
         return new Patch(new Offset(offsetBytes), new Value(valueBytes));
     }
+
+	public int[] getOffsetOverlap(){
+		Project p = this.project;
+		List<Patch> patches = p.getPatches();
+
+		int size = patches.size();
+		for(int i = 0; i < (size - 1); i++){
+			Patch patch = patches.get(i);
+			Offset offset = patch.getOffset();
+
+			int offsetStart = ProjectExporter.byteArrayToInt(offset.getBytes());
+			int offsetEnd = patch.getValue().getBytes().length + offsetStart;
+			for(int j = i + 1; j < size; j++){
+				Patch patch1 = patches.get(j);
+				Offset offset1 = patch1.getOffset();
+
+				int offsetStart1 = ProjectExporter.byteArrayToInt(offset.getBytes());
+				int offsetEnd1 = patch1.getValue().getBytes().length + offsetStart1;
+
+				if(!(offsetEnd1 < offsetStart && offsetEnd < offsetStart1)){
+					return new int[]{i, j};
+				}
+			}
+		}
+
+		return null;
+	}
 }

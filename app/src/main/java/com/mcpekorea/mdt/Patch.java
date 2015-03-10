@@ -12,12 +12,20 @@ public class Patch {
 	private Offset offset;
 	private Value value;
 	private boolean isExcluded;
+	private String comment;
 
     public Patch(Offset offset, Value value) {
         this.offset = offset;
         this.value = value;
 	    this.isExcluded = false;
     }
+
+	public Patch(Offset offset, Value value, boolean isExcluded, String comment){
+		this.offset = offset;
+		this.value = value;
+		this.isExcluded = isExcluded;
+		this.comment = comment;
+	}
 
     public Offset getOffset() {
 		return offset;
@@ -47,6 +55,14 @@ public class Patch {
 		return this.isExcluded;
 	}
 
+	public void setComment(String comment){
+		this.comment = comment;
+	}
+
+	public String getComment(){
+		return this.comment;
+	}
+
 	@Override
 	public String toString() {
 		return this.offset.toString() + " : " + this.value.toString();
@@ -57,7 +73,9 @@ public class Patch {
             Offset offset = Offset.createFromJSON(object.getJSONArray("offset"));
             Value value = Value.createFromJSON(object.getJSONArray("value"));
 
-            return new Patch(offset, value);
+			boolean isExcluded = object.getBoolean("isExcluded");
+	        String comment = object.getString("comment");
+            return new Patch(offset, value, isExcluded, comment);
         }catch(JSONException e){
             e.printStackTrace();
             return null;
@@ -69,6 +87,8 @@ public class Patch {
 		try {
 			object.put("offset", this.offset.toJSON());
 			object.put("value", this.value.toJSON());
+			object.put("isExcluded", this.isExcluded);
+			object.put("comment", this.comment);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
