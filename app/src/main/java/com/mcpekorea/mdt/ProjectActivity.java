@@ -86,6 +86,11 @@ public class ProjectActivity extends ActionBarActivity {
 				return true;
 			}
 
+            if(this.project.getIncludedPatchesCount() == 0){
+                Toast.makeText(this, R.string.toast_project_nothing_to_export, Toast.LENGTH_LONG).show();
+                return true;
+            }
+
 			ProjectExporter exporter = new ProjectExporter(this.project);
             FileOutputStream fos = null;
 

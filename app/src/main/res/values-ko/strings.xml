@@ -37,6 +37,7 @@
     <string name="toast_project_deleted" formatted="false">프로젝트 %s[[를]] 성공적으로 삭제하였습니다.</string>
     <string name="toast_project_empty">프로젝트가 비어 있습니다.</string>
     <string name="toast_project_exported">프로젝트를 성공적으로 내보냈습니다.</string>
+    <string name="toast_project_nothing_to_export">내보낼 것이 아무것도 없습니다!</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s[[는]] 비워 둘 수 없습니다!</string>

@@ -37,6 +37,7 @@
     <string name="toast_project_deleted" formatted="false">Project %s was deleted successfully.</string>
     <string name="toast_project_empty">Project is empty.</string>
     <string name="toast_project_exported">Project was exported successfully.</string>
+    <string name="toast_project_nothing_to_export">Nothing to export!</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s cannot be empty!</string>

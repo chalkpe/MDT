@@ -37,6 +37,7 @@
     <string name="toast_project_deleted" formatted="false">プロジェクト%sを成功的に削除しました。</string>
     <string name="toast_project_empty">プロジェクトが空いています。</string>
     <string name="toast_project_exported">プロジェクトを成功的に出しました。</string>
+    <string name="toast_project_nothing_to_export">エクスポートするものは何もありません！</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%sを空白にすることはできません！</string>

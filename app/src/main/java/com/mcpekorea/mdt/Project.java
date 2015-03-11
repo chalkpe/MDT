@@ -82,6 +82,20 @@ public class Project {
 		return this.patches.size();
 	}
 
+    public List<Patch> getIncludedPatches(){
+        List<Patch> included = new ArrayList<>();
+        for(Patch patch : this.patches){
+            if(!patch.isExcluded()){
+                included.add(patch);
+            }
+        }
+        return included;
+    }
+
+    public int getIncludedPatchesCount(){
+        return getIncludedPatches().size();
+    }
+
     public static Project createFromJSON(InputStream inputStream){
         BufferedReader br = null;
         try{
