@@ -205,7 +205,7 @@ public class ProjectActivity extends ActionBarActivity {
 			for(int j = 0; j < this.project.getPatchesCount(); j++){
                 if(i != j){
                     Patch b = this.project.getPatches().get(j);
-                    if(!(b.getPatchEnd() < a.getPatchStart() || a.getPatchEnd() < b.getPatchStart())){
+                    if(!(b.getPatchEnd() <= a.getPatchStart() || a.getPatchEnd() <= b.getPatchStart())){
                         a.setOverlapped(true);
                         b.setOverlapped(true);
                         return true;

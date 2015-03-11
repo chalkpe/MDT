@@ -74,7 +74,7 @@ public class Patch {
     }
 
     public int getPatchEnd(){
-        return this.getPatchStart() + this.value.getBytesLength() + 1;
+        return this.getPatchStart() + this.value.getBytesLength();
     }
 
 	@Override
