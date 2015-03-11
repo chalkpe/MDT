@@ -27,6 +27,10 @@ public class Value {
 		this.bytes = bytes;
 	}
 
+    public int getBytesLength(){
+        return this.bytes.length;
+    }
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(bytes.length * 2);
