@@ -16,6 +16,8 @@ import com.mcpekorea.hangul.Hangul;
 public class CreatePatchActivity extends ActionBarActivity {
     private int patchIndex;
     private EditText offsetArea, valueArea, memoArea;
+	private String beforeOffset = "", beforeValue = "", beforeMemo = "";
+	private boolean beforeExcluded = false;
     private CheckBox isExcludedBox;
 
     @Override
@@ -36,10 +38,18 @@ public class CreatePatchActivity extends ActionBarActivity {
 
         if(patchIndex >= 0){ //Edit mode
             setTitle(R.string.title_activity_edit_patch);
-            offsetArea.setText(bundle.getString("offsetString"));
-            valueArea.setText(bundle.getString("valueString"));
-            memoArea.setText(bundle.getString("memo"));
-            isExcludedBox.setChecked(bundle.getBoolean("isExcluded", false));
+
+	        beforeOffset = bundle.getString("offsetString");
+            offsetArea.setText(beforeOffset);
+
+	        beforeValue = bundle.getString("valueString");
+            valueArea.setText(beforeValue);
+
+	        beforeMemo = bundle.getString("memo");
+            memoArea.setText(beforeMemo);
+
+	        beforeExcluded = bundle.getBoolean("isExcluded", false);
+            isExcludedBox.setChecked(beforeExcluded);
         }
     }
 
@@ -108,7 +118,12 @@ public class CreatePatchActivity extends ActionBarActivity {
                 return true;
 
             case R.id.menu_cancel:
-                showCancelDialog();
+	            if(!(beforeOffset.equals(offsetArea.getText().toString()) && beforeValue.equals(valueArea.getText().toString()) && beforeExcluded == isExcludedBox.isChecked())) {
+		            showCancelDialog();
+	            }else{
+		            setResult(RESULT_CANCELED);
+		            finish();
+	            }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -117,7 +132,12 @@ public class CreatePatchActivity extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            showCancelDialog();
+			if(!(beforeOffset.equals(offsetArea.getText().toString()) && beforeValue.equals(valueArea.getText().toString()) && beforeExcluded == isExcludedBox.isChecked())) {
+				showCancelDialog();
+			}else{
+				setResult(RESULT_CANCELED);
+				finish();
+			}
             return true;
         }
         return super.onKeyDown(keyCode, event);
