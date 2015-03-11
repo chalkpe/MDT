@@ -25,11 +25,11 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 
-public class WorkspaceActivity extends ActionBarActivity {
+public class WorkspaceActivity extends ActionBarActivity implements View.OnClickListener {
     public static final File ROOT_DIRECTORY = new File(Environment.getExternalStorageDirectory(), "MDT");
     public static final File PROJECTS_DIRECTORY = new File(ROOT_DIRECTORY, "projects");
     public static final File EXPORT_DIRECTORY = new File(ROOT_DIRECTORY, "export");
@@ -69,12 +69,6 @@ public class WorkspaceActivity extends ActionBarActivity {
         if(projectFiles == null || projectFiles.length == 0){
             projects = new ArrayList<>();
         }else{
-            Arrays.sort(projectFiles, new Comparator<File>() {
-                public int compare(File a, File b) {
-                    return a.getName().compareToIgnoreCase(b.getName());
-                }
-            });
-
             projects = new ArrayList<>(projectFiles.length);
             for(File file : projectFiles){
                 try{
@@ -85,54 +79,17 @@ public class WorkspaceActivity extends ActionBarActivity {
             }
         }
 
-	    adapter = new WorkspaceAdapter(this, projects);
+        sortProjects();
+
+	    adapter = new WorkspaceAdapter(this, projects, this);
         listView.setAdapter(adapter);
 
 	    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 		    @Override
 		    public void onItemClick(AdapterView<?> a, View v, final int position, long l) {
-				final Project project = projects.get(position);
-
-				new AlertDialog.Builder(WorkspaceActivity.this)
-                        .setTitle(project.getName())
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setNeutralButton(R.string.dialog_text_delete, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface d, int i) {
-                                new AlertDialog.Builder(WorkspaceActivity.this)
-                                        .setTitle(R.string.dialog_title_confirm_delete)
-                                        .setMessage(Hangul.format(getResources().getString(R.string.dialog_message_confirm_project_delete), project.getName()))
-                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface d, int i) {
-                                                projects.remove(position);
-                                                adapter.notifyDataSetChanged();
-
-                                                File file = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
-
-                                                boolean succeed = false;
-                                                if (file.exists()) {
-                                                    succeed = file.delete();
-                                                }
-
-                                                if (succeed) {
-                                                    Toast.makeText(WorkspaceActivity.this, Hangul.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                        })
-                                        .setNegativeButton(android.R.string.cancel, null)
-                                        .show();
-                            }
-                        })
-				        .setPositiveButton(R.string.dialog_text_open, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface d, int i) {
-                                Intent intent = new Intent(WorkspaceActivity.this, ProjectActivity.class);
-                                intent.putExtra("projectIndex", position);
-                                startActivityForResult(intent, 1);
-                            }
-                        })
-                        .show();
+                Intent intent = new Intent(WorkspaceActivity.this, ProjectActivity.class);
+                intent.putExtra("projectIndex", position);
+                startActivityForResult(intent, 1);
 		    }
 	    });
     }
@@ -162,6 +119,7 @@ public class WorkspaceActivity extends ActionBarActivity {
 
             adapter.addProject(project);
             adapter.notifyDataSetChanged();
+            sortProjects();
             saveProjects();
         }else if(requestCode == 1 && resultCode == RESULT_OK){
             adapter.notifyDataSetChanged();
@@ -170,9 +128,43 @@ public class WorkspaceActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause(){
         super.onPause();
         saveProjects();
+    }
+
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.list_item_image:
+                final int position = (Integer) v.getTag();
+                final Project project = projects.get(position);
+
+                new AlertDialog.Builder(WorkspaceActivity.this)
+                        .setTitle(R.string.dialog_title_confirm_delete)
+                        .setMessage(Hangul.format(getResources().getString(R.string.dialog_message_confirm_project_delete), project.getName()))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface d, int i) {
+                                projects.remove(position);
+                                adapter.notifyDataSetChanged();
+
+                                File file = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
+
+                                boolean succeed = false;
+                                if (file.exists()) {
+                                    succeed = file.delete();
+                                }
+
+                                if (succeed) {
+                                    Toast.makeText(WorkspaceActivity.this, Hangul.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show();
+                break;
+        }
     }
 
     public void initResources(){
@@ -207,6 +199,15 @@ public class WorkspaceActivity extends ActionBarActivity {
         if(succeed){
             Log.d(getText(R.string.app_name).toString(), "Directories are created!");
         }
+    }
+
+    public void sortProjects(){
+        Collections.sort(projects, new Comparator<Project>() {
+            @Override
+            public int compare(Project a, Project b) {
+                return a.getName().compareToIgnoreCase(b.getName());
+            }
+        });
     }
 
     public void saveProjects(){

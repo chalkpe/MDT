@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,8 +19,9 @@ public class WorkspaceAdapter extends BaseAdapter{
     private Context context;
     private List<Project> projects;
     private LayoutInflater inflater;
+    private View.OnClickListener buttonListener;
 
-    public WorkspaceAdapter(Context context, List<Project> projects){
+    public WorkspaceAdapter(Context context, List<Project> projects, View.OnClickListener buttonListener){
         if(context == null){
             throw new NullPointerException("context must not be null");
         }
@@ -29,6 +31,7 @@ public class WorkspaceAdapter extends BaseAdapter{
 
         this.context = context;
         this.projects = projects;
+        this.buttonListener = buttonListener;
 
         this.inflater = LayoutInflater.from(context);
     }
@@ -71,6 +74,11 @@ public class WorkspaceAdapter extends BaseAdapter{
             holder = new WorkspaceHolder();
             holder.title = (TextView) convertView.findViewById(R.id.list_item_title);
             holder.subtitle = (TextView) convertView.findViewById(R.id.list_item_subtitle);
+            holder.button = (ImageButton) convertView.findViewById(R.id.list_item_image);
+
+            holder.button.setImageResource(R.drawable.ic_delete_black_36dp);
+            holder.button.setTag(position);
+            holder.button.setOnClickListener(this.buttonListener);
 
             convertView.setTag(holder);
         }else{
@@ -90,5 +98,6 @@ public class WorkspaceAdapter extends BaseAdapter{
     class WorkspaceHolder {
         public TextView title;
         public TextView subtitle;
+        public ImageButton button;
     }
 }

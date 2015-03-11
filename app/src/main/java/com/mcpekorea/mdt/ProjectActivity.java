@@ -39,6 +39,7 @@ public class ProjectActivity extends ActionBarActivity {
 		project = WorkspaceActivity.projects.get(bundle.getInt("projectIndex"));
 
 		setTitle(project.getName());
+        findDuplicatedPatches();
 
         findViewById(R.id.project_fab_add).setOnClickListener(new View.OnClickListener(){
             @Override
@@ -62,6 +63,8 @@ public class ProjectActivity extends ActionBarActivity {
                 intent.putExtra("patchIndex", position);
                 intent.putExtra("offsetString", patch.getOffset().toString());
                 intent.putExtra("valueString", patch.getValue().toString());
+                intent.putExtra("memo", patch.getMemo());
+                intent.putExtra("isExcluded", patch.isExcluded());
 
                 startActivityForResult(intent, 1);
             }
@@ -134,6 +137,7 @@ public class ProjectActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0 && resultCode == RESULT_OK){
             adapter.addPatch(createPatchFromBundle(data.getExtras()));
+            findDuplicatedPatches();
             adapter.notifyDataSetChanged();
         }else if(requestCode == 1 && resultCode == RESULT_OK){
             int patchIndex = data.getIntExtra("patchIndex", -1);
@@ -145,6 +149,7 @@ public class ProjectActivity extends ActionBarActivity {
                     Toast.makeText(this, R.string.toast_patch_deleted, Toast.LENGTH_LONG).show();
                 }else{
                     project.getPatches().set(patchIndex, createPatchFromBundle(data.getExtras()));
+                    findDuplicatedPatches();
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -184,33 +189,29 @@ public class ProjectActivity extends ActionBarActivity {
             valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
         }
 
-        return new Patch(new Offset(offsetBytes), new Value(valueBytes));
+        String memo = bundle.getString("memo", "");
+        boolean isExcluded = bundle.getBoolean("isExcluded", false);
+
+        return new Patch(new Offset(offsetBytes), new Value(valueBytes), memo, isExcluded);
     }
 
-	public int[] getOffsetOverlap(){
-		Project p = this.project;
-		List<Patch> patches = p.getPatches();
-
-		int size = patches.size();
-		for(int i = 0; i < (size - 1); i++){
-			Patch patch = patches.get(i);
-			Offset offset = patch.getOffset();
-
-			int offsetStart = ProjectExporter.byteArrayToInt(offset.getBytes());
-			int offsetEnd = patch.getValue().getBytes().length + offsetStart;
-			for(int j = i + 1; j < size; j++){
-				Patch patch1 = patches.get(j);
-				Offset offset1 = patch1.getOffset();
-
-				int offsetStart1 = ProjectExporter.byteArrayToInt(offset.getBytes());
-				int offsetEnd1 = patch1.getValue().getBytes().length + offsetStart1;
-
-				if(!(offsetEnd1 < offsetStart && offsetEnd < offsetStart1)){
-					return new int[]{i, j};
-				}
+	public boolean findDuplicatedPatches(){
+		for(int i = 0; i < this.project.getPatchesCount(); i++){
+			Patch a = this.project.getPatches().get(i);
+			for(int j = 0; j < this.project.getPatchesCount(); j++){
+                if(i != j){
+                    Patch b = this.project.getPatches().get(j);
+                    if(!(b.getPatchEnd() < a.getPatchStart() || a.getPatchEnd() < b.getPatchStart())){
+                        a.setOverlapped(true);
+                        b.setOverlapped(true);
+                        return true;
+                    }else{
+                        a.setOverlapped(false);
+                        b.setOverlapped(false);
+                    }
+                }
 			}
 		}
-
-		return null;
+        return false;
 	}
 }

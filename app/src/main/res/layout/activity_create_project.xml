@@ -24,7 +24,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="32dp" />
+        android:layout_height="@dimen/horizontal_gap" />
 
     <TextView
         android:layout_width="wrap_content"

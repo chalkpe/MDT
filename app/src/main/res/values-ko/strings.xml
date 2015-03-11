@@ -52,4 +52,6 @@
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">오프셋</string>
     <string name="create_patch_value">값</string>
+    <string name="create_patch_memo">메모</string>
+    <string name="create_patch_is_excluded">제외됨</string>
 </resources>

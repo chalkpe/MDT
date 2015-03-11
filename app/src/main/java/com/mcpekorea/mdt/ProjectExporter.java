@@ -1,6 +1,7 @@
 package com.mcpekorea.mdt;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,13 @@ public class ProjectExporter {
 
         int header = HEADER_END + offsetShift;
 
-        List<Patch> patches = project.getPatches();
+        List<Patch> patches = new ArrayList<>();
+        for(Patch patch : project.getPatches()){
+            if(!patch.isExcluded()){
+                patches.add(patch);
+            }
+        }
+
         length += (header + (Offset.SIZE * patches.size()));
         for(Patch patch : patches){
             length += (patch.getValue().getBytesLength() + Offset.SIZE);

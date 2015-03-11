@@ -11,21 +11,22 @@ import org.json.JSONObject;
 public class Patch {
 	private Offset offset;
 	private Value value;
+    private String memo;
 	private boolean isExcluded;
-	private String comment;
+    private boolean isOverlapped = false;
 
     public Patch(Offset offset, Value value) {
         this.offset = offset;
         this.value = value;
 	    this.isExcluded = false;
-	    this.comment = "";
+	    this.memo = "";
     }
 
-	public Patch(Offset offset, Value value, boolean isExcluded, String comment){
+	public Patch(Offset offset, Value value, String memo, boolean isExcluded){
 		this.offset = offset;
 		this.value = value;
+        this.memo = memo;
 		this.isExcluded = isExcluded;
-		this.comment = comment;
 	}
 
     public Offset getOffset() {
@@ -44,25 +45,37 @@ public class Patch {
 		this.value = value;
 	}
 
-	public void exclude(){
-		this.isExcluded = true;
+    public String getMemo(){
+        return this.memo;
+    }
+
+    public void setMemo(String memo){
+        this.memo = memo;
+    }
+
+    public boolean isExcluded(){
+        return this.isExcluded;
+    }
+
+	public void setExcluded(boolean isExcluded){
+		this.isExcluded = isExcluded;
 	}
 
-	public void include(){
-		this.isExcluded = false;
-	}
+    public boolean isOverlapped() {
+        return isOverlapped;
+    }
 
-	public boolean isExcluded(){
-		return this.isExcluded;
-	}
+    public void setOverlapped(boolean isOverlapped) {
+        this.isOverlapped = isOverlapped;
+    }
 
-	public void setComment(String comment){
-		this.comment = comment;
-	}
+    public int getPatchStart(){
+        return ProjectExporter.byteArrayToInt(this.offset.getBytes());
+    }
 
-	public String getComment(){
-		return this.comment;
-	}
+    public int getPatchEnd(){
+        return this.getPatchStart() + this.value.getBytesLength() + 1;
+    }
 
 	@Override
 	public String toString() {
@@ -74,9 +87,10 @@ public class Patch {
             Offset offset = Offset.createFromJSON(object.getJSONArray("offset"));
             Value value = Value.createFromJSON(object.getJSONArray("value"));
 
+            String memo = object.getString("memo");
 			boolean isExcluded = object.getBoolean("isExcluded");
-	        String comment = object.getString("comment");
-            return new Patch(offset, value, isExcluded, comment);
+
+            return new Patch(offset, value, memo, isExcluded);
         }catch(JSONException e){
             e.printStackTrace();
             return null;
@@ -85,12 +99,12 @@ public class Patch {
 
 	public JSONObject toJSON(){
 		JSONObject object = new JSONObject();
-		try {
+		try{
 			object.put("offset", this.offset.toJSON());
 			object.put("value", this.value.toJSON());
-			object.put("isExcluded", this.isExcluded);
-			object.put("comment", this.comment);
-		} catch (JSONException e) {
+			object.put("memo", this.memo);
+            object.put("isExcluded", this.isExcluded);
+		}catch (JSONException e){
 			e.printStackTrace();
 		}
 		return object;

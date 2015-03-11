@@ -25,7 +25,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="32dp" />
+        android:layout_height="@dimen/horizontal_gap" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,4 +39,30 @@
         android:layout_height="wrap_content"
         android:digits="0123456789abcdefABCDEF"
         android:inputType="textCapCharacters"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/horizontal_gap" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/create_patch_memo" />
+
+    <EditText
+        android:id="@+id/create_patch_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/horizontal_gap" />
+
+    <CheckBox
+        android:id="@+id/create_patch_is_excluded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_patch_is_excluded" />
 </LinearLayout>

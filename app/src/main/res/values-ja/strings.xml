@@ -52,4 +52,6 @@
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">オフセット</string>
     <string name="create_patch_value">値</string>
+    <string name="create_patch_memo">メモ</string>
+    <string name="create_patch_is_excluded">除外された</string>
 </resources>

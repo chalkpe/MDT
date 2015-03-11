@@ -52,6 +52,8 @@
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">Offset</string>
     <string name="create_patch_value">Value</string>
+    <string name="create_patch_memo">Memo</string>
+    <string name="create_patch_is_excluded">Excluded</string>
 
     <!-- List item -->
     <string name="list_item_title" translatable="false">Title</string>
