@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#a9a9a9</color>
-    <color name="accent">#808080</color>
+    <color name="primary">#1abd9d</color>
+    <color name="primaryDark">#16a085</color>
+    <color name="accent">#1abd9d</color>
 
-    <color name="fab">#808080</color>
-    <color name="fabPressed">#696969</color>
+    <color name="text">#404040</color>
+
+    <color name="fab">#1abd9d</color>
+    <color name="fabPressed">#16a085</color>
+    <color name="fabPlusIcon">#fefefe</color>
 </resources>

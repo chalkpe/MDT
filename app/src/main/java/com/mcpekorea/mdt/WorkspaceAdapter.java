@@ -76,7 +76,7 @@ public class WorkspaceAdapter extends BaseAdapter{
             holder.subtitle = (TextView) convertView.findViewById(R.id.list_item_subtitle);
             holder.button = (ImageButton) convertView.findViewById(R.id.list_item_image);
 
-            holder.button.setImageResource(R.drawable.ic_delete_black_36dp);
+            holder.button.setImageResource(R.drawable.ic_delete_grey600_36dp);
             holder.button.setTag(position);
             holder.button.setOnClickListener(this.buttonListener);
 

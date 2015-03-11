@@ -79,11 +79,11 @@ public class ProjectAdapter extends BaseAdapter{
 		holder.value.setText(patch.getValue().toString());
 
 		if(patch.isOverlapped()){
-			holder.image.setImageResource(R.drawable.ic_error_black_36dp);
+			holder.image.setImageResource(R.drawable.ic_error_grey600_36dp);
 		}else if(patch.isExcluded()){
-			holder.image.setImageResource(R.drawable.ic_radio_button_off_black_36dp);
+			holder.image.setImageResource(R.drawable.ic_radio_button_off_grey600_36dp);
 		}else{
-            holder.image.setImageResource(R.drawable.ic_radio_button_on_black_36dp);
+            holder.image.setImageResource(R.drawable.ic_radio_button_on_grey600_36dp);
         }
 
 		return convertView;

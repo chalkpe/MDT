@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
+    <com.getbase.floatingactionbutton.AddFloatingActionButton
         android:id="@+id/project_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_icon="@drawable/ic_add_black_48dp"
+        fab:fab_plusIconColor="@color/fabPlusIcon"
         fab:fab_colorNormal="@color/fab"
         fab:fab_colorPressed="@color/fabPressed"
         android:layout_centerHorizontal="true"

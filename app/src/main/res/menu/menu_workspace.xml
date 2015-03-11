@@ -5,6 +5,6 @@
 
     <item android:id="@+id/menu_settings"
         android:title="@string/action_settings"
-        android:icon="@drawable/ic_tune_black_48dp"
+        android:icon="@drawable/ic_tune_white_36dp"
         app:showAsAction="ifRoom"/>
 </menu>
