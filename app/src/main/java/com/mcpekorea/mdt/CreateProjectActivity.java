@@ -24,7 +24,7 @@ public class CreateProjectActivity extends ActionBarActivity {
         setContentView(R.layout.activity_create_project);
 
         projectNameArea = (EditText) findViewById(R.id.create_project_project_name);
-        projectNameArea.setText(WorkspaceActivity.samples[new Random().nextInt(WorkspaceActivity.samples.length)]);
+        projectNameArea.setHint(WorkspaceActivity.samples[new Random().nextInt(WorkspaceActivity.samples.length)]);
     }
 
     @Override
@@ -43,8 +43,7 @@ public class CreateProjectActivity extends ActionBarActivity {
                 String authorName = authorNameArea.getText().toString();
 
                 if(projectName == null || (projectName = projectName.trim()).equals("")){
-                    projectNameArea.setError(Hangul.format(getText(R.string.error_empty).toString(), getText(R.string.create_project_project_name).toString()));
-                    return true;
+	                projectName = projectNameArea.getHint().toString();
                 }
 
                 for(Project project : WorkspaceActivity.projects){

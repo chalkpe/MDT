@@ -41,7 +41,7 @@
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s cannot be empty!</string>
-    <string name="error_project_already_exists" formatted="false">Project %s is already exists!</string>
+    <string name="error_project_already_exists" formatted="false">Project %s already exists!</string>
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d patches, by %s</string>
