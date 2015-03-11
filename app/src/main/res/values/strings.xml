@@ -53,6 +53,11 @@
     <string name="create_patch_offset">Offset</string>
     <string name="create_patch_value">Value</string>
 
+    <!-- List item -->
+    <string name="list_item_title" translatable="false">Title</string>
+    <string name="list_item_subtitle" translatable="false">Subtitle</string>
+    <string name="list_item_image" translatable="false">Image</string>
+
     <!-- SettingsActivity -->
     <string name="settings_inconsolata" translatable="false">Inconsolata font</string>
     <string name="settings_inconsolata_license" translatable="false">Copyright © 2006 Raph Levien\nUsed under the SIL Open Font License, http://scripts.sil.org/OFL\n\n</string>

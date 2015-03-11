@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
-        tools:text="Title" />
+        tools:text="@string/list_item_title" />
 
     <TextView
         android:id="@+id/list_item_subtitle"
@@ -26,12 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:text="Subtitle" />
+        tools:text="@string/list_item_subtitle" />
 
     <ImageView
         android:id="@+id/list_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/list_item_image"/>
 </RelativeLayout>
