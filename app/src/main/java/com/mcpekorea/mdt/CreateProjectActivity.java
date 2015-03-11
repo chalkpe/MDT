@@ -55,7 +55,7 @@ public class CreateProjectActivity extends ActionBarActivity {
                 }
 
                 if(authorName == null || (authorName = authorName.trim()).equals("")){
-                    authorName = getText(R.string.default_authorName).toString();
+                    authorName = "";
                 }
 
                 Bundle bundle = new Bundle();

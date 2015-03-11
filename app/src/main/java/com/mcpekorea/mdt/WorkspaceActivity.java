@@ -38,8 +38,6 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
     public static String[] samples;
 
     public static ArrayList<Project> projects;
-
-    private ListView listView;
 	private WorkspaceAdapter adapter;
 
     @Override
@@ -57,7 +55,7 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
             }
         });
 
-        listView = (ListView) findViewById(R.id.workspace_list);
+        final ListView listView = (ListView) findViewById(R.id.workspace_list);
 
         File[] projectFiles = PROJECTS_DIRECTORY.listFiles(new FilenameFilter() {
             @Override
@@ -117,7 +115,7 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
         if(requestCode == 0 && resultCode == RESULT_OK){
             Project project = new Project(data.getStringExtra("projectName"), data.getStringExtra("authorName"));
 
-            adapter.addProject(project);
+            projects.add(project);
             adapter.notifyDataSetChanged();
             sortProjects();
             saveProjects();

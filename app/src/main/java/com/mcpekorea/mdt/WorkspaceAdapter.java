@@ -36,18 +36,6 @@ public class WorkspaceAdapter extends BaseAdapter{
         this.inflater = LayoutInflater.from(context);
     }
 
-	public void addProject(Project project){
-		this.projects.add(project);
-	}
-
-	public void removeProject(Project project){
-		this.projects.remove(project);
-	}
-
-	public void removeProject(int index){
-		this.projects.remove(index);
-	}
-
     @Override
     public int getCount(){
         return this.projects.size();
@@ -85,12 +73,13 @@ public class WorkspaceAdapter extends BaseAdapter{
             holder = (WorkspaceHolder) convertView.getTag();
         }
 
-        holder.title.setText(project.getName());
-
-	    if(project.getAuthor().equals("")){
-            project.setAuthor(context.getText(R.string.default_authorName).toString());
+        String author = project.getAuthor();
+	    if(author.equals("")){
+            author = context.getText(R.string.default_authorName).toString();
 	    }
-        holder.subtitle.setText(String.format(context.getText(R.string.workspace_project_information).toString(), project.getPatchesCount(), project.getAuthor()));
+
+        holder.title.setText(project.getName());
+        holder.subtitle.setText(String.format(context.getText(R.string.workspace_project_information).toString(), project.getPatchesCount(), author));
 
         return convertView;
     }

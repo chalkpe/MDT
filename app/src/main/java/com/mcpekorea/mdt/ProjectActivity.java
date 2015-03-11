@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class ProjectActivity extends ActionBarActivity {
 	private Project project;
-	private ListView listView;
 	private ProjectAdapter adapter;
 
 	@Override
@@ -38,7 +37,7 @@ public class ProjectActivity extends ActionBarActivity {
 		Bundle bundle = getIntent().getExtras();
 		project = WorkspaceActivity.projects.get(bundle.getInt("projectIndex"));
 
-		setTitle(project.getName());
+		setTitle(getText(R.string.app_name).toString() + ": " + project.getName());
         findDuplicatedPatches();
 
         findViewById(R.id.project_fab_add).setOnClickListener(new View.OnClickListener(){
@@ -51,7 +50,7 @@ public class ProjectActivity extends ActionBarActivity {
             }
         });
 
-        listView = (ListView) findViewById(R.id.project_list);
+        final ListView listView = (ListView) findViewById(R.id.project_list);
         listView.setAdapter((adapter = new ProjectAdapter(this, project.getPatches())));
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
