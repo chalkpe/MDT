@@ -13,7 +13,7 @@
     <!-- Action bar item -->
     <string name="action_settings">設定</string>
     <string name="action_create">生成</string>
-    <string name="action_export">出す</string>
+    <string name="action_export">エクスポートする</string>
     <string name="action_change_author_name">作成者名を変更</string>
     <string name="action_save">貯蔵</string>
     <string name="action_delete">削除</string>
@@ -36,8 +36,9 @@
     <string name="toast_patch_deleted">そのパッチを成功的に削除しました。</string>
     <string name="toast_project_deleted" formatted="false">プロジェクト%sを成功的に削除しました。</string>
     <string name="toast_project_empty">プロジェクトが空いています。</string>
-    <string name="toast_project_exported">プロジェクトを成功的に出しました。</string>
+    <string name="toast_project_exported">プロジェクトを成功的にエクスポートしました。</string>
     <string name="toast_project_nothing_to_export">エクスポートするものは何もありません！</string>
+    <string name="toast_project_has_overlapped_patches">プロジェクトにオーバーラップされたパッチがあります！</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%sを空白にすることはできません！</string>
@@ -45,6 +46,9 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d個のパッチ、作成者 %s</string>
+
+    <!-- ProjectActivity -->
+    <string name="project_export_type">エクスポートタイプ</string>
 
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">プロジェクト名</string>

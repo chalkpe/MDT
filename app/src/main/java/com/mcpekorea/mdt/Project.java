@@ -58,20 +58,12 @@ public class Project {
 		return patches;
 	}
 
-	public void setPatches(List<Patch> patches) {
-		this.patches = patches;
-	}
+    public void setPatch(int position, Patch patch){
+        this.patches.set(position, patch);
+    }
 
 	public void addPatch(Patch patch){
 		this.patches.add(patch);
-	}
-
-	public void addPatch(int position, Patch patch){
-		this.patches.add(position, patch);
-	}
-
-	public void removePatch(Patch patch){
-		this.patches.remove(patch);
 	}
 
 	public void removePatch(int position){
@@ -94,6 +86,15 @@ public class Project {
 
     public int getIncludedPatchesCount(){
         return getIncludedPatches().size();
+    }
+
+    public boolean hasOverlappedPatches(){
+        for(Patch patch : this.patches){
+            if(patch.isOverlapped()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static Project createFromJSON(InputStream inputStream){

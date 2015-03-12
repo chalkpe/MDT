@@ -35,7 +35,7 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
     public static final File EXPORT_DIRECTORY = new File(ROOT_DIRECTORY, "export");
 
     public static Typeface inconsolata, inconsolataBold;
-    public static String[] samples;
+    public static String[] samples, exportTypes;
 
     public static ArrayList<Project> projects;
 	private WorkspaceAdapter adapter;
@@ -170,6 +170,7 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
         inconsolataBold = Typeface.createFromAsset(getAssets(), "Inconsolata/Inconsolata-Bold.ttf");
 
         samples = getResources().getStringArray(R.array.samples);
+        exportTypes = getResources().getStringArray(R.array.export_types);
     }
 
     public void initDirectories(){

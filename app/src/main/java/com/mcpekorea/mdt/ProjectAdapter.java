@@ -34,11 +34,6 @@ public class ProjectAdapter extends BaseAdapter{
 
 		this.inflater = LayoutInflater.from(context);
 	}
-
-	public void addPatch(Patch patch){
-		this.patches.add(patch);
-	}
-
 	@Override
 	public int getCount(){
 		return this.patches.size();

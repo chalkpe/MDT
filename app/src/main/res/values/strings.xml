@@ -38,6 +38,7 @@
     <string name="toast_project_empty">Project is empty.</string>
     <string name="toast_project_exported">Project was exported successfully.</string>
     <string name="toast_project_nothing_to_export">Nothing to export!</string>
+    <string name="toast_project_has_overlapped_patches">Project has overlapped patches!</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s cannot be empty!</string>
@@ -45,6 +46,9 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d patches, by %s</string>
+
+    <!-- ProjectActivity -->
+    <string name="project_export_type">Export type</string>
 
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">Project Name</string>

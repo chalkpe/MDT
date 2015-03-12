@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/dialog_change_author_name_author_area"
+        android:id="@+id/dialog_project_change_author_name_author_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"/>

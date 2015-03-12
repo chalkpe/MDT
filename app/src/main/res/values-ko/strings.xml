@@ -38,6 +38,7 @@
     <string name="toast_project_empty">프로젝트가 비어 있습니다.</string>
     <string name="toast_project_exported">프로젝트를 성공적으로 내보냈습니다.</string>
     <string name="toast_project_nothing_to_export">내보낼 것이 아무것도 없습니다!</string>
+    <string name="toast_project_has_overlapped_patches">프로젝트에 중첩된 패치가 있습니다!</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s[[는]] 비워 둘 수 없습니다!</string>
@@ -45,6 +46,9 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d개의 패치, 작성자 %s</string>
+
+    <!-- ProjectActivity -->
+    <string name="project_export_type">내보내기 유형</string>
 
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">프로젝트 이름</string>
