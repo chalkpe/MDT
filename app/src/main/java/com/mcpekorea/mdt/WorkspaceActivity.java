@@ -19,10 +19,10 @@ import com.mcpekorea.hangul.Hangul;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,10 +57,10 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
 
         final ListView listView = (ListView) findViewById(R.id.workspace_list);
 
-        File[] projectFiles = PROJECTS_DIRECTORY.listFiles(new FilenameFilter() {
+        File[] projectFiles = PROJECTS_DIRECTORY.listFiles(new FileFilter() {
             @Override
-            public boolean accept(File dir, String filename) {
-                return filename.toLowerCase().endsWith(".json");
+            public boolean accept(File file) {
+                return file.length() > 0 && file.getName().toLowerCase().endsWith(".json");
             }
         });
 
