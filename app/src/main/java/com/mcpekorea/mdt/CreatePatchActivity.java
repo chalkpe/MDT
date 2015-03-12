@@ -16,9 +16,10 @@ import com.mcpekorea.hangul.Hangul;
 public class CreatePatchActivity extends ActionBarActivity {
     private int patchIndex;
     private EditText offsetArea, valueArea, memoArea;
-	private String beforeOffset = "", beforeValue = "", beforeMemo = "";
-	private boolean beforeExcluded = false;
     private CheckBox isExcludedBox;
+
+    private String oldOffsetString = "", oldValueString = "", oldMemo = "";
+    private boolean oldIsExcluded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +40,17 @@ public class CreatePatchActivity extends ActionBarActivity {
         if(patchIndex >= 0){ //Edit mode
             setTitle(R.string.title_activity_edit_patch);
 
-	        beforeOffset = bundle.getString("offsetString");
-            offsetArea.setText(beforeOffset);
+            oldOffsetString = bundle.getString("offsetString");
+            offsetArea.setText(oldOffsetString);
 
-	        beforeValue = bundle.getString("valueString");
-            valueArea.setText(beforeValue);
+            oldValueString = bundle.getString("valueString");
+            valueArea.setText(oldValueString);
 
-	        beforeMemo = bundle.getString("memo");
-            memoArea.setText(beforeMemo);
+            oldMemo = bundle.getString("memo");
+            memoArea.setText(oldMemo);
 
-	        beforeExcluded = bundle.getBoolean("isExcluded", false);
-            isExcludedBox.setChecked(beforeExcluded);
+            oldIsExcluded = bundle.getBoolean("isExcluded", false);
+            isExcludedBox.setChecked(oldIsExcluded);
         }
     }
 
@@ -118,12 +119,7 @@ public class CreatePatchActivity extends ActionBarActivity {
                 return true;
 
             case R.id.menu_cancel:
-	            if(!(beforeOffset.equals(offsetArea.getText().toString()) && beforeValue.equals(valueArea.getText().toString()) && beforeExcluded == isExcludedBox.isChecked())) {
-		            showCancelDialog();
-	            }else{
-		            setResult(RESULT_CANCELED);
-		            finish();
-	            }
+	            showCancelDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -132,30 +128,33 @@ public class CreatePatchActivity extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if(!(beforeOffset.equals(offsetArea.getText().toString()) && beforeValue.equals(valueArea.getText().toString()) && beforeExcluded == isExcludedBox.isChecked())) {
-				showCancelDialog();
-			}else{
-				setResult(RESULT_CANCELED);
-				finish();
-			}
+			showCancelDialog();
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
     public void showCancelDialog(){
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_title_close)
-                .setIcon(R.drawable.ic_clear_black_48dp)
-                .setMessage(R.string.dialog_message_close_without_saving)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setResult(RESULT_CANCELED);
-                        finish();
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
+        if(oldOffsetString.equalsIgnoreCase(offsetArea.getText().toString()) &&
+                oldValueString.equalsIgnoreCase(valueArea.getText().toString()) &&
+                oldMemo.equals(memoArea.getText().toString()) &&
+                oldIsExcluded == isExcludedBox.isChecked()){
+            setResult(RESULT_CANCELED);
+            finish();
+        }else{
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.dialog_title_close)
+                    .setIcon(R.drawable.ic_clear_black_48dp)
+                    .setMessage(R.string.dialog_message_close_without_saving)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setResult(RESULT_CANCELED);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+        }
     }
 }
