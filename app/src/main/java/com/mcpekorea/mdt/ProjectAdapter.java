@@ -20,8 +20,9 @@ public class ProjectAdapter extends BaseAdapter{
 	private Context context;
 	private List<Patch> patches;
 	private LayoutInflater inflater;
+	private View.OnClickListener listener;
 
-	public ProjectAdapter(Context context, List<Patch> patches){
+	public ProjectAdapter(Context context, List<Patch> patches, View.OnClickListener listener){
 		if(context == null){
 			throw new NullPointerException("context must not be null");
 		}
@@ -31,6 +32,7 @@ public class ProjectAdapter extends BaseAdapter{
 
 		this.context = context;
 		this.patches = patches;
+		this.listener = listener;
 
 		this.inflater = LayoutInflater.from(context);
 	}
@@ -64,6 +66,8 @@ public class ProjectAdapter extends BaseAdapter{
 
             holder.offset.setTypeface(WorkspaceActivity.inconsolataBold);
             holder.value.setTypeface(WorkspaceActivity.inconsolata);
+			holder.image.setTag(position);
+			holder.image.setOnClickListener(listener);
 
 			convertView.setTag(holder);
 		}else{

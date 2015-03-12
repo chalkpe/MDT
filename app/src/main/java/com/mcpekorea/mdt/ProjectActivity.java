@@ -24,7 +24,7 @@ import java.io.IOException;
  * @since 2015-03-08
  * @author onebone <jyc0410@naver.com>
  */
-public class ProjectActivity extends ActionBarActivity {
+public class ProjectActivity extends ActionBarActivity implements View.OnClickListener{
 	private Project project;
 	private ProjectAdapter adapter;
 
@@ -50,7 +50,7 @@ public class ProjectActivity extends ActionBarActivity {
         });
 
         final ListView listView = (ListView) findViewById(R.id.project_list);
-        listView.setAdapter((adapter = new ProjectAdapter(this, project.getPatches())));
+        listView.setAdapter((adapter = new ProjectAdapter(this, project.getPatches(), this)));
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -221,4 +221,17 @@ public class ProjectActivity extends ActionBarActivity {
             }
         }
     }
+
+	@Override
+	public void onClick(View v){
+		switch(v.getId()){
+			case  R.id.list_item_image:
+				int position = (int)v.getTag();
+				Patch patch = project.getPatches().get(position);
+
+				patch.setExcluded(!patch.isExcluded());
+				adapter.notifyDataSetChanged();
+				break;
+		}
+	}
 }
