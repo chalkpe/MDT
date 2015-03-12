@@ -49,6 +49,7 @@
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">Project Name</string>
     <string name="create_project_author_name">Author Name</string>
+    <string name="create_project_warning_message">Project name cannot be changed later!</string>
 
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">Offset</string>

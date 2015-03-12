@@ -49,6 +49,7 @@
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">프로젝트 이름</string>
     <string name="create_project_author_name">작성자 이름</string>
+    <string name="create_project_warning_message">프로젝트 이름은 나중에 바꿀 수 없습니다!</string>
 
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">오프셋</string>
