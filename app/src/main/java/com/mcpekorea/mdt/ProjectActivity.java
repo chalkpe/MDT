@@ -162,9 +162,11 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
 	public boolean findOverlappedPatches(){
 		for(int i = 0; i < this.project.getPatchesCount(); i++){
 			Patch a = this.project.getPatches().get(i);
+			if(a.isExcluded()) continue;
 			for(int j = 0; j < this.project.getPatchesCount(); j++){
                 if(i != j){
                     Patch b = this.project.getPatches().get(j);
+	                if(b.isExcluded()) continue;
                     if(!(b.getPatchEnd() <= a.getPatchStart() || a.getPatchEnd() <= b.getPatchStart())){
                         a.setOverlapped(true);
                         b.setOverlapped(true);
