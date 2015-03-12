@@ -19,8 +19,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @since 2015-03-08
@@ -151,28 +149,9 @@ public class ProjectActivity extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public static List<String> splitEqually(String text, int size) {
-        List<String> list = new ArrayList<>((text.length() + size - 1) / size);
-
-        for (int start = 0; start < text.length(); start += size) {
-            list.add(text.substring(start, Math.min(text.length(), start + size)));
-        }
-        return list;
-    }
-
     public Patch createPatchFromBundle(Bundle bundle){
-        List<String> offsetStrings = splitEqually(bundle.getString("offsetString"), 2);
-        List<String> valueStrings = splitEqually(bundle.getString("valueString"), 2);
-
-        byte[] offsetBytes = new byte[offsetStrings.size()];
-        byte[] valueBytes = new byte[valueStrings.size()];
-
-        for(int i = 0; i < offsetStrings.size(); i++){
-            offsetBytes[i] = (byte) Integer.parseInt(offsetStrings.get(i), 16);
-        }
-        for(int i = 0; i < valueStrings.size(); i++){
-            valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
-        }
+        byte[] offsetBytes = bundle.getByteArray("offsetBytes");
+        byte[] valueBytes = bundle.getByteArray("valueBytes");
 
         String memo = bundle.getString("memo", "");
         boolean isExcluded = bundle.getBoolean("isExcluded", false);

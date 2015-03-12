@@ -58,6 +58,8 @@
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">Offset</string>
     <string name="create_patch_value">Value</string>
+    <string name="create_patch_value_type_hex">Hex</string>
+    <string name="create_patch_value_type_unicode">Unicode</string>
     <string name="create_patch_memo">Memo</string>
     <string name="create_patch_is_excluded">Excluded</string>
 
@@ -76,5 +78,4 @@
 
     <!-- Default values -->
     <string name="default_authorName" translatable="false">Unknown</string>
-    <string name="default_value" translatable="false">7047</string>
 </resources>
