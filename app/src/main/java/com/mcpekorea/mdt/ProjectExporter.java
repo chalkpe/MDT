@@ -10,50 +10,52 @@ import java.util.List;
 public class ProjectExporter {
     private Project project;
 
-    public static final int HEADER_END = 6;
+    public static final int HEADER_LENGTH = 6;
 
     public ProjectExporter(Project project){
         this.project = project;
     }
 
     public byte[] create() throws IOException {
-        int length = 0;
-
-        String author = project.getAuthor();
-        int offsetShift = author.length();
-
-        int header = HEADER_END + offsetShift;
-
         List<Patch> patches = this.project.getIncludedPatches();
-        length += (header + (Offset.SIZE * patches.size()));
+
+        int length = 0;
+        length += HEADER_LENGTH;
+
+        int indicesLength = Offset.SIZE * patches.size();
+        length += indicesLength;
+
+        byte[] metadataBytes = project.getAuthor().getBytes("UTF-8");
+        length += metadataBytes.length;
+
+        length += (Offset.SIZE * patches.size());
+
         for(Patch patch : patches){
-            length += (patch.getValue().getBytesLength() + Offset.SIZE);
+            length += patch.getValue().getBytesLength();
         }
 
         byte[] mod = new byte[length];
 
-        mod = writeBytes(mod, new byte[]{(byte) 0xFF, 0x50, 0x54, 0x50, 0x00}, 0);
-        mod[5] = (byte) patches.size();
+        writeBytes(mod, new byte[]{(byte) 0xFF, 0x50, 0x54, 0x50, 0x00, (byte) patches.size()}, 0);
+        writeBytes(mod, metadataBytes, HEADER_LENGTH + indicesLength);
 
-        int patchStart = header + (Offset.SIZE * patches.size());
+        int patchStart = HEADER_LENGTH + indicesLength + metadataBytes.length;
 
-        mod = writeBytes(mod, author.getBytes("UTF-8"), HEADER_END + 1);
+        for(int i = 0; i < patches.size(); i++){
+            Patch patch = patches.get(i);
 
-        for(Patch patch : patches){
-            Offset offset = patch.getOffset();
-            Value value = patch.getValue();
+            writeBytes(mod, intToByteArray(patchStart), HEADER_LENGTH + Offset.SIZE * i);
+            int offsetBytesLength = writeBytes(mod, patch.getOffset().getBytes(), patchStart);
+            int valueBytesLength = writeBytes(mod, patch.getValue().getBytes(), patchStart + Offset.SIZE);
 
-            mod = writeBytes(mod, intToByteArray(header), header);
-            mod = writeBytes(mod, offset.getBytes(), patchStart);
-            patchStart += Offset.SIZE + (mod = writeBytes(mod, value.getBytes(), patchStart + 4)).length;
-            header += Offset.SIZE;
+            patchStart += (offsetBytesLength + valueBytesLength);
         }
         return mod;
     }
 
-    public static byte[] writeBytes(byte[] src, byte[] dst, int start){
-        System.arraycopy(dst, 0, src, start, dst.length);
-        return src;
+    public static int writeBytes(byte[] dst, byte[] src, int start){
+        System.arraycopy(src, 0, dst, start, src.length);
+        return src.length;
     }
 
     public static byte[] intToByteArray(int value) {
