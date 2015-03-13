@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mcpekorea.hangul.Hangul;
+import com.mcpekorea.peanalyzer.PEAnalyzer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,6 +31,8 @@ import java.util.Comparator;
 
 
 public class WorkspaceActivity extends ActionBarActivity implements View.OnClickListener {
+    public static WorkspaceActivity that;
+
     public static final File ROOT_DIRECTORY = new File(Environment.getExternalStorageDirectory(), "MDT");
     public static final File PROJECTS_DIRECTORY = new File(ROOT_DIRECTORY, "projects");
     public static final File EXPORT_DIRECTORY = new File(ROOT_DIRECTORY, "export");
@@ -39,11 +42,14 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
 
     public static ArrayList<Project> projects;
 	private WorkspaceAdapter adapter;
+    public static PEAnalyzer analyzer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace);
+
+        that = this;
 
         initResources();
         initDirectories();
@@ -171,6 +177,12 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
 
         samples = getResources().getStringArray(R.array.samples);
         exportTypes = getResources().getStringArray(R.array.export_types);
+
+        try{
+            analyzer = new PEAnalyzer(new File(this.getCacheDir(), "PEAnalyzer"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void initDirectories(){
@@ -229,5 +241,13 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
                 }
             }
         }
+    }
+
+    public static void toast(final int resId, final int length){
+        that.runOnUiThread(new Runnable(){
+            public void run(){
+                Toast.makeText(that, resId, length).show();
+            }
+        });
     }
 }

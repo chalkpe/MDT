@@ -46,6 +46,8 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d개의 패치, 작성자 %s</string>
+    <string name="workspace_cache_created">캐시가 생성되었습니다.</string>
+    <string name="workspace_cache_loaded">캐시가 로드되었습니다.</string>
 
     <!-- ProjectActivity -->
     <string name="project_export_type">내보내기 유형</string>
@@ -62,4 +64,5 @@
     <string name="create_patch_value_type_unicode">유니코드</string>
     <string name="create_patch_memo">메모</string>
     <string name="create_patch_is_excluded">제외됨</string>
+    <string name="create_patch_no_information">정보 없음</string>
 </resources>

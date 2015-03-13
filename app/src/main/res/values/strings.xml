@@ -46,6 +46,8 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d patches, by %s</string>
+    <string name="workspace_cache_created">Cache has been created.</string>
+    <string name="workspace_cache_loaded">Cache has been loaded.</string>
 
     <!-- ProjectActivity -->
     <string name="project_export_type">Export type</string>
@@ -57,6 +59,7 @@
 
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">Offset</string>
+    <string name="create_patch_no_information">No information</string>
     <string name="create_patch_value">Value</string>
     <string name="create_patch_value_type_hex">Hex</string>
     <string name="create_patch_value_type_unicode">Unicode</string>

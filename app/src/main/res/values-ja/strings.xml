@@ -46,6 +46,8 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d個のパッチ、作成者 %s</string>
+    <string name="workspace_cache_created">キャッシュが生成されました。</string>
+    <string name="workspace_cache_loaded">キャッシュがロードされました。</string>
 
     <!-- ProjectActivity -->
     <string name="project_export_type">エクスポートタイプ</string>
@@ -57,6 +59,7 @@
 
     <!-- CreatePatchActivity -->
     <string name="create_patch_offset">オフセット</string>
+    <string name="create_patch_no_information">情報なし</string>
     <string name="create_patch_value">値</string>
     <string name="create_patch_value_type_hex">16進法</string>
     <string name="create_patch_value_type_unicode">ユニコード</string>

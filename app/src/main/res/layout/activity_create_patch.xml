@@ -22,13 +22,53 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/create_patch_offset_text"
         android:digits="0123456789abcdefABCDEF"
-        android:inputType="textCapCharacters"/>
+        android:inputType="textCapCharacters"
+        android:maxLength="8"
+        android:singleLine="true" />
+
+    <HorizontalScrollView
+        android:id="@+id/create_patch_information_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/create_patch_offset"
+        android:layout_gravity="center_vertical"
+        android:overScrollMode="never">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/default_margin">
+
+            <ImageView
+                android:id="@+id/create_patch_information_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_info_black_18dp"
+                android:contentDescription="@string/create_patch_no_information"/>
+
+            <TextView
+                android:id="@+id/create_patch_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/create_patch_information_image"
+                android:layout_toEndOf="@+id/create_patch_information_image"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/create_patch_no_information" />
+        </RelativeLayout>
+
+    </HorizontalScrollView>
 
     <Space
         android:id="@+id/create_patch_space1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_gap"
-        android:layout_below="@id/create_patch_offset" />
+        android:layout_below="@id/create_patch_information_wrapper" />
 
     <TextView
         android:id="@+id/create_patch_value_text"
@@ -37,7 +77,6 @@
         android:layout_below="@id/create_patch_space1"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/create_patch_value" />
-
 
     <RadioGroup
         android:id="@+id/create_patch_value_type_group"
@@ -82,17 +121,16 @@
             android:layout_height="wrap_content"
             android:visibility="visible"
             android:digits="0123456789abcdefABCDEF"
-            android:inputType="textCapCharacters" />
+            android:inputType="textCapCharacters"
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/create_patch_value_string"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:inputType="text" />
-
+            android:inputType="text"/>
     </FrameLayout>
-
 
     <Space
         android:id="@+id/create_patch_space2"
@@ -113,7 +151,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/create_patch_memo_text"
-        android:inputType="textPersonName"/>
+        android:inputType="text" />
 
     <Space
         android:id="@+id/create_patch_space3"

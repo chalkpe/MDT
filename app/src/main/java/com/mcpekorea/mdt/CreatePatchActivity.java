@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,26 +14,30 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.mcpekorea.hangul.Hangul;
+import com.mcpekorea.peanalyzer.Line;
+import com.mcpekorea.peanalyzer.UnsignedInteger;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CreatePatchActivity extends ActionBarActivity {
+public class CreatePatchActivity extends ActionBarActivity implements TextWatcher {
     public static final byte[] DEFAULT_VALUE = new byte[]{0x70, 0x47};
     public static final byte[] BLANK = new byte[]{};
 
     private int patchIndex;
     private EditText offsetArea, valueAreaHex, valueAreaString, memoArea;
     private CheckBox isExcludedBox;
+    private TextView informationText;
 
     private String oldOffsetString = "", oldValueString = "", oldMemo = "";
     private boolean oldIsExcluded = false;
 
-    private int currrentValueType = R.id.create_patch_value_type_hex;
+    private int currentValueType = R.id.create_patch_value_type_hex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +49,18 @@ public class CreatePatchActivity extends ActionBarActivity {
         valueAreaString = (EditText) findViewById(R.id.create_patch_value_string);
         memoArea = (EditText) findViewById(R.id.create_patch_memo);
         isExcludedBox = (CheckBox) findViewById(R.id.create_patch_is_excluded);
+        informationText = (TextView) findViewById(R.id.create_patch_information);
 
         offsetArea.setTypeface(WorkspaceActivity.inconsolata);
         valueAreaHex.setTypeface(WorkspaceActivity.inconsolata);
         valueAreaString.setTypeface(WorkspaceActivity.inconsolata);
 
+        offsetArea.addTextChangedListener(this);
+
         ((RadioGroup) findViewById(R.id.create_patch_value_type_group)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (currrentValueType != checkedId) {
+                if (currentValueType != checkedId) {
                     switch (checkedId) {
                         case R.id.create_patch_value_type_hex:
                             valueAreaHex.setText(new Value(getValueBytes()).toString());
@@ -59,16 +68,16 @@ public class CreatePatchActivity extends ActionBarActivity {
                             valueAreaString.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.create_patch_value_type_unicode:
-                            try{
+                            try {
                                 valueAreaString.setText(new String(getValueBytes(), "UTF-8"));
-                            }catch(UnsupportedEncodingException e){
+                            } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
                             valueAreaString.setVisibility(View.VISIBLE);
                             valueAreaHex.setVisibility(View.INVISIBLE);
                             break;
                     }
-                    currrentValueType = checkedId;
+                    currentValueType = checkedId;
                 }
             }
         });
@@ -182,8 +191,8 @@ public class CreatePatchActivity extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public EditText getCurrrentValueArea(){
-        switch(currrentValueType){
+    public EditText getCurrentValueArea(){
+        switch(currentValueType){
             case R.id.create_patch_value_type_hex:
                 return valueAreaHex;
             case R.id.create_patch_value_type_unicode:
@@ -194,7 +203,7 @@ public class CreatePatchActivity extends ActionBarActivity {
     }
 
     public byte[] getValueBytes(){
-        switch(currrentValueType){
+        switch(currentValueType){
             case R.id.create_patch_value_type_hex:
                 String hexString = valueAreaHex.getText().toString();
                 if(hexString == null || hexString.equals("")){
@@ -236,7 +245,7 @@ public class CreatePatchActivity extends ActionBarActivity {
 
     public void showCancelDialog(){
         if(oldOffsetString.equalsIgnoreCase(offsetArea.getText().toString()) &&
-                oldValueString.equalsIgnoreCase(getCurrrentValueArea().getText().toString()) &&
+                oldValueString.equalsIgnoreCase(getCurrentValueArea().getText().toString()) &&
                 oldMemo.equals(memoArea.getText().toString()) &&
                 oldIsExcluded == isExcludedBox.isChecked()){
             setResult(RESULT_CANCELED);
@@ -255,6 +264,31 @@ public class CreatePatchActivity extends ActionBarActivity {
                     })
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after){
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s){
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count){
+        String offset = offsetArea.getText().toString();
+        if(offset == null || offset.equals("")){
+           return;
+        }
+
+        Line line = WorkspaceActivity.analyzer.get(new UnsignedInteger(offset));
+        if(line == null){
+            informationText.setText(R.string.create_patch_no_information);
+        }else{
+            informationText.setText(line.toString());
         }
     }
 }
