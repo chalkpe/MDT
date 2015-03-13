@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.mcpekorea.hangul.Hangul;
 import com.mcpekorea.peanalyzer.Line;
 import com.mcpekorea.peanalyzer.UnsignedInteger;
+import com.mcpekorea.ptpatch.Value;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

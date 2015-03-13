@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.mcpekorea.hangul.Hangul;
+import com.mcpekorea.ptpatch.Project;
 
 import java.util.Random;
 

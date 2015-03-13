@@ -1,4 +1,4 @@
-package com.mcpekorea.mdt;
+package com.mcpekorea.ptpatch;
 
 import org.json.JSONArray;
 import org.json.JSONException;

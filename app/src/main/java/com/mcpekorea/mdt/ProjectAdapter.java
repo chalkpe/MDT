@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mcpekorea.ptpatch.Patch;
+
 import java.util.List;
 
 /**
@@ -66,6 +68,7 @@ public class ProjectAdapter extends BaseAdapter{
 
             holder.offset.setTypeface(WorkspaceActivity.inconsolataBold);
             holder.value.setTypeface(WorkspaceActivity.inconsolata);
+
 			holder.image.setTag(position);
 			holder.image.setOnClickListener(listener);
 

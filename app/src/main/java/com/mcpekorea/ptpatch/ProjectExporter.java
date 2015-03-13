@@ -1,4 +1,4 @@
-package com.mcpekorea.mdt;
+package com.mcpekorea.ptpatch;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +44,7 @@ public class ProjectExporter {
         for(int i = 0; i < patches.size(); i++){
             Patch patch = patches.get(i);
 
-            writeBytes(mod, intToByteArray(patchStart), HEADER_LENGTH + Offset.SIZE * i);
+            writeBytes(mod, Value.intToByteArray(patchStart), HEADER_LENGTH + Offset.SIZE * i);
             int offsetBytesLength = writeBytes(mod, patch.getOffset().getBytes(), patchStart);
             int valueBytesLength = writeBytes(mod, patch.getValue().getBytes(), patchStart + Offset.SIZE);
 
@@ -56,18 +56,5 @@ public class ProjectExporter {
     public static int writeBytes(byte[] dst, byte[] src, int start){
         System.arraycopy(src, 0, dst, start, src.length);
         return src.length;
-    }
-
-    public static byte[] intToByteArray(int value) {
-        return new byte[] {
-            (byte) (value >>> 24),
-            (byte) (value >>> 16),
-            (byte) (value >>>  8),
-            (byte)  value
-        };
-    }
-
-    public static int byteArrayToInt(byte[] bytes) {
-        return (bytes[0] << 24) | ((bytes[1] & 0xFF) << 16) | ((bytes[2] & 0xFF) << 8) | (bytes[3] & 0xFF);
     }
 }

@@ -16,6 +16,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.mcpekorea.ptpatch.Offset;
+import com.mcpekorea.ptpatch.Patch;
+import com.mcpekorea.ptpatch.Project;
+import com.mcpekorea.ptpatch.ProjectExporter;
+import com.mcpekorea.ptpatch.Value;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

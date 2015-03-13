@@ -1,4 +1,4 @@
-package com.mcpekorea.mdt;
+package com.mcpekorea.ptpatch;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,4 +65,17 @@ public class Value {
 		}
 		return array;
 	}
+
+    public static byte[] intToByteArray(int value) {
+        return new byte[] {
+                (byte) (value >>> 24),
+                (byte) (value >>> 16),
+                (byte) (value >>>  8),
+                (byte)  value
+        };
+    }
+
+    public static int byteArrayToInt(byte[] values) {
+        return (values[0] << 24) | ((values[1] & 0xFF) << 16) | ((values[2] & 0xFF) << 8) | (values[3] & 0xFF);
+    }
 }

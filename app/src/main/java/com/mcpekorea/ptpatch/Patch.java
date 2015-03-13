@@ -1,4 +1,4 @@
-package com.mcpekorea.mdt;
+package com.mcpekorea.ptpatch;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +70,7 @@ public class Patch {
     }
 
     public int getPatchStart(){
-        return ProjectExporter.byteArrayToInt(this.offset.getBytes());
+        return Value.byteArrayToInt(this.offset.getBytes());
     }
 
     public int getPatchEnd(){
