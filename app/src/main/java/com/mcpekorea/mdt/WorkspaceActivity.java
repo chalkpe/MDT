@@ -112,7 +112,8 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.menu_settings){
-	        startActivity(new Intent(this, SettingsActivity.class));
+	        //startActivity(new Intent(this, SettingsActivity.class));
+            WorkspaceActivity.toast("Settings is not available now", Toast.LENGTH_LONG);
             return true;
         }
         return super.onOptionsItemSelected(item);

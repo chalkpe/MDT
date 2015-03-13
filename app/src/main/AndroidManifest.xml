@@ -33,10 +33,6 @@
             android:label="@string/title_activity_create_patch" >
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name=".FileChooserActivity"
             android:label="@string/title_activity_file_chooser" >
         </activity>
