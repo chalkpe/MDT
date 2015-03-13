@@ -6,6 +6,7 @@
     <!-- Activity title -->
     <string name="title_activity_create_project">プロジェクトを生成</string>
     <string name="title_activity_create_patch">パッチを生成</string>
+    <string name="title_activity_file_chooser">Choose file</string>
     <string name="title_activity_edit_patch">パッチを編集</string>
     <string name="title_activity_settings">設定</string>
     <string name="title_activity_project">プロジェクト</string>
@@ -17,6 +18,7 @@
     <string name="action_change_author_name">作成者名を変更</string>
     <string name="action_save">貯蔵</string>
     <string name="action_delete">削除</string>
+    <string name="action_select">選択</string>
 
     <!-- Dialog title -->
     <string name="dialog_title_close">閉じる</string>

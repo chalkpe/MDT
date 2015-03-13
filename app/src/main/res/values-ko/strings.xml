@@ -17,6 +17,7 @@
     <string name="action_change_author_name">작성자 이름 바꾸기</string>
     <string name="action_save">저장</string>
     <string name="action_delete">삭제</string>
+    <string name="action_select">선택</string>
 
     <!-- Dialog title -->
     <string name="dialog_title_close">닫기</string>
@@ -65,4 +66,5 @@
     <string name="create_patch_memo">메모</string>
     <string name="create_patch_is_excluded">제외됨</string>
     <string name="create_patch_no_information">정보 없음</string>
+    <string name="title_activity_file_chooser">ファイルを選択</string>
 </resources>

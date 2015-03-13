@@ -6,6 +6,7 @@
     <dimen name="default_gap">32dp</dimen>
 
     <dimen name="right_side_icon_size">36dp</dimen>
+    <dimen name="file_chooser_icon_size">48dp</dimen>
 
     <dimen name="fab_size">60dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

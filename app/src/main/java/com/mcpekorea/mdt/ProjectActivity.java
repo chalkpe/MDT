@@ -147,7 +147,7 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
             setResult(RESULT_OK);
             finish();
             return true;

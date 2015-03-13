@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_centerVertical="true">
+
+    <ImageView
+        android:id="@+id/list_item_file_chooser_icon"
+        android:layout_width="@dimen/file_chooser_icon_size"
+        android:layout_height="@dimen/file_chooser_icon_size"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/default_fileName" />
+
+    <TextView
+        android:id="@+id/list_item_file_chooser_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/list_item_file_chooser_icon"
+        android:layout_toEndOf="@+id/list_item_file_chooser_icon"
+        android:layout_alignTop="@+id/list_item_file_chooser_icon"
+        android:layout_alignBottom="@+id/list_item_file_chooser_icon"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:text="@string/default_fileName"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:singleLine="true"
+        android:ellipsize="middle" />
+
+</RelativeLayout>
