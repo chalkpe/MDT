@@ -5,8 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.ArrayList;
@@ -97,10 +98,10 @@ public class Project {
         return false;
     }
 
-    public static Project createFromJSON(InputStream inputStream){
+    public static Project createFromJSON(File file){
         BufferedReader br = null;
         try{
-            br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 
             StringBuilder sb = new StringBuilder();
             String read;
@@ -111,6 +112,11 @@ public class Project {
             JSONObject object = new JSONObject(sb.toString());
             String name = object.getString("name");
             String author = object.getString("author");
+
+            if(!file.getName().equalsIgnoreCase(name.concat(".json"))){
+                file.delete();
+                return null;
+            }
 
             JSONArray array = object.getJSONArray("patches");
             ArrayList<Patch> patches = new ArrayList<>(array.length());

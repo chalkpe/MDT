@@ -6,10 +6,11 @@
     <!-- Activity title -->
     <string name="title_activity_create_project">プロジェクトを生成</string>
     <string name="title_activity_create_patch">パッチを生成</string>
-    <string name="title_activity_file_chooser">Choose file</string>
+    <string name="title_activity_file_chooser">ファイルを選択</string>
     <string name="title_activity_edit_patch">パッチを編集</string>
     <string name="title_activity_settings">設定</string>
     <string name="title_activity_project">プロジェクト</string>
+    <string name="title_activity_export_project">プロジェクトをエクスポートする</string>
 
     <!-- Action bar item -->
     <string name="action_settings">設定</string>
@@ -51,8 +52,9 @@
     <string name="workspace_cache_created">キャッシュが生成されました。</string>
     <string name="workspace_cache_loaded">キャッシュがロードされました。</string>
 
-    <!-- ProjectActivity -->
-    <string name="project_export_type">エクスポートタイプ</string>
+    <!-- ExportProjectActivity -->
+    <string name="export_project_type">エクスポートタイプ</string>
+    <string name="export_project_directory">エクスポート·ディレクトリ</string>
 
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">プロジェクト名</string>

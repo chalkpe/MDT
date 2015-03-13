@@ -40,6 +40,10 @@
             android:name=".FileChooserActivity"
             android:label="@string/title_activity_file_chooser" >
         </activity>
+        <activity
+            android:name=".ExportProjectActivity"
+            android:label="@string/title_activity_export_project" >
+        </activity>
     </application>
 
 </manifest>

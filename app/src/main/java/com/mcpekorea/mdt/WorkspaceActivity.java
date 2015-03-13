@@ -1,8 +1,10 @@
 package com.mcpekorea.mdt;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -22,8 +24,6 @@ import com.mcpekorea.ptpatch.Project;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +67,11 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
         File[] projectFiles = PROJECTS_DIRECTORY.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
-                return file.length() > 0 && file.getName().toLowerCase().endsWith(".json");
+                boolean isProjectFile = file.length() > 0 && file.getName().toLowerCase().endsWith(".json");
+                if(!isProjectFile){
+                    file.delete();
+                }
+                return isProjectFile;
             }
         });
 
@@ -76,10 +80,9 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
         }else{
             projects = new ArrayList<>(projectFiles.length);
             for(File file : projectFiles){
-                try{
-                    projects.add(Project.createFromJSON(new FileInputStream(file)));
-                }catch(FileNotFoundException e){
-                    e.printStackTrace();
+                Project project = Project.createFromJSON(file);
+                if(project != null){
+                    projects.add(project);
                 }
             }
         }
@@ -148,21 +151,21 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
                 new AlertDialog.Builder(WorkspaceActivity.this)
                         .setTitle(R.string.dialog_title_confirm_delete)
                         .setMessage(Hangul.format(getResources().getString(R.string.dialog_message_confirm_project_delete), project.getName()))
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
                             @Override
-                            public void onClick(DialogInterface d, int i) {
+                            public void onClick(DialogInterface d, int i){
                                 projects.remove(position);
                                 adapter.notifyDataSetChanged();
 
                                 File file = new File(PROJECTS_DIRECTORY, project.getName() + ".json");
 
                                 boolean succeed = false;
-                                if (file.exists()) {
+                                if(file.exists()){
                                     succeed = file.delete();
                                 }
 
-                                if (succeed) {
-                                    Toast.makeText(WorkspaceActivity.this, Hangul.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG).show();
+                                if(succeed){
+                                    WorkspaceActivity.toast(Hangul.format(getString(R.string.toast_project_deleted), project.getName()), Toast.LENGTH_LONG);
                                 }
                             }
                         })
@@ -243,6 +246,13 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
             }
         }
     }
+    public static void toast(final String message, final int length){
+        that.runOnUiThread(new Runnable(){
+            public void run(){
+                Toast.makeText(that, message, length).show();
+            }
+        });
+    }
 
     public static void toast(final int resId, final int length){
         that.runOnUiThread(new Runnable(){
@@ -250,5 +260,13 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
                 Toast.makeText(that, resId, length).show();
             }
         });
+    }
+
+    public static SharedPreferences getSharedPreference(){
+        return getSharedPreference("pref");
+    }
+
+    public static SharedPreferences getSharedPreference(String name){
+        return that.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 }

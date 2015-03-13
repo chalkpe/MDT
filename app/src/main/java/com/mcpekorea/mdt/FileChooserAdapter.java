@@ -9,12 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.List;
 
 public class FileChooserAdapter extends BaseAdapter{
     private LayoutInflater inflater;
-    private File[] files;
+    private List<File> files;
 
-    public FileChooserAdapter(Context context, File[] files){
+    public FileChooserAdapter(Context context, List<File> files){
         if(context == null){
             throw new NullPointerException("context must not be null");
         }
@@ -24,12 +25,12 @@ public class FileChooserAdapter extends BaseAdapter{
 
     @Override
     public int getCount(){
-        return this.files.length;
+        return this.files.size();
     }
 
     @Override
     public Object getItem(int position){
-        return this.files[position];
+        return this.files.get(position);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class FileChooserAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        File file = this.files[position];
+        File file = this.files.get(position);
         FileHolder holder;
 
         if(convertView == null){

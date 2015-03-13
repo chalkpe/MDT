@@ -10,6 +10,7 @@
     <string name="title_activity_edit_patch">Edit patch</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_project">Project</string>
+    <string name="title_activity_export_project">Export project</string>
 
     <!-- Action bar item -->
     <string name="action_settings">Settings</string>
@@ -51,8 +52,9 @@
     <string name="workspace_cache_created">Cache has been created.</string>
     <string name="workspace_cache_loaded">Cache has been loaded.</string>
 
-    <!-- ProjectActivity -->
-    <string name="project_export_type">Export type</string>
+    <!-- ExportProjectActivity -->
+    <string name="export_project_type">Export type</string>
+    <string name="export_project_directory">Export directory</string>
 
     <!-- CreateProjectActivity -->
     <string name="create_project_project_name">Project Name</string>

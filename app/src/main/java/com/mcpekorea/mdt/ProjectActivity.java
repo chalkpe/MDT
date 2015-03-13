@@ -13,18 +13,12 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.mcpekorea.ptpatch.Offset;
 import com.mcpekorea.ptpatch.Patch;
 import com.mcpekorea.ptpatch.Project;
-import com.mcpekorea.ptpatch.ProjectExporter;
 import com.mcpekorea.ptpatch.Value;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * @since 2015-03-08
@@ -32,6 +26,7 @@ import java.io.IOException;
  */
 public class ProjectActivity extends ActionBarActivity implements View.OnClickListener{
 	private Project project;
+    private int projectIndex;
 	private ProjectAdapter adapter;
 
 	@Override
@@ -40,7 +35,12 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
 		setContentView(R.layout.activity_project);
 
 		Bundle bundle = getIntent().getExtras();
-		project = WorkspaceActivity.projects.get(bundle.getInt("projectIndex"));
+        projectIndex = bundle.getInt("projectIndex", -1);
+        if(projectIndex == -1){
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+		project = WorkspaceActivity.projects.get(projectIndex);
 
 		setTitle(getText(R.string.app_name).toString() + ": " + project.getName());
         findOverlappedPatches();
@@ -85,20 +85,9 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
 	public boolean onOptionsItemSelected(MenuItem item){
 		int id = item.getItemId();
 		if(id == R.id.menu_export){
-            final LinearLayout layout = (LinearLayout) View.inflate(this, R.layout.dialog_project_export, null);
-            final Spinner typeSpinner = (Spinner) layout.findViewById(R.id.dialog_project_export_type_spinner);
-
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.project_export_type)
-                    .setView(layout)
-                    .setPositiveButton(R.string.action_export, new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialog, int which){
-                            exportProject(typeSpinner.getSelectedItemPosition());
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .show();
+            Intent intent = new Intent(this, ExportProjectActivity.class);
+            intent.putExtra("projectIndex", this.projectIndex);
+            startActivity(intent);
 			return true;
 		}else if(id == R.id.menu_change_author_name){
             final LinearLayout layout = (LinearLayout) View.inflate(this, R.layout.dialog_project_change_author_name, null);
@@ -135,7 +124,7 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
                     project.removePatch(patchIndex);
                     adapter.notifyDataSetChanged();
 
-                    Toast.makeText(this, R.string.toast_patch_deleted, Toast.LENGTH_LONG).show();
+                    WorkspaceActivity.toast(R.string.toast_patch_deleted, Toast.LENGTH_LONG);
                 }else{
                     project.setPatch(patchIndex, createPatchFromBundle(data.getExtras()));
                     findOverlappedPatches();
@@ -204,47 +193,4 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
 		}
         return false;
 	}
-
-    public void exportProject(int exportType){
-        if(this.project.getPatchesCount() == 0){
-            Toast.makeText(this, R.string.toast_project_empty, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if(this.project.getIncludedPatchesCount() == 0){
-            Toast.makeText(this, R.string.toast_project_nothing_to_export, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if(this.project.hasOverlappedPatches()){
-            Toast.makeText(this, R.string.toast_project_has_overlapped_patches, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        File file = new File(WorkspaceActivity.EXPORT_DIRECTORY, project.getName() + "-" + WorkspaceActivity.exportTypes[exportType].toLowerCase() + ".mod");
-        ProjectExporter exporter = new ProjectExporter(this.project);
-        FileOutputStream fos = null;
-
-        try {
-            byte[] bytes = exporter.create();
-            fos = new FileOutputStream(file);
-            fos.write(bytes);
-
-            Toast.makeText(this, R.string.toast_project_exported, Toast.LENGTH_LONG).show();
-        }catch(IOException e){
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.dialog_title_error_occurred)
-                    .setMessage(e.getMessage())
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-        }finally{
-            try{
-                if(fos != null){
-                    fos.close();
-                }
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
 }
