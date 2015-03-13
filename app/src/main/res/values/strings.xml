@@ -81,4 +81,5 @@
 
     <!-- Default values -->
     <string name="default_authorName" translatable="false">Unknown</string>
+    <string name="default_cacheDirectory" translatable="false">PEAnalyzerCache</string>
 </resources>

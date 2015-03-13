@@ -179,7 +179,7 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
         exportTypes = getResources().getStringArray(R.array.export_types);
 
         try{
-            analyzer = new PEAnalyzer(new File(this.getCacheDir(), "PEAnalyzer"));
+            analyzer = new PEAnalyzer(new File(this.getCacheDir(), getText(R.string.default_cacheDirectory).toString()));
         }catch(IOException e){
             e.printStackTrace();
         }

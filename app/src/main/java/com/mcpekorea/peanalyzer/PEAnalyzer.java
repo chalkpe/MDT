@@ -113,6 +113,8 @@ public class PEAnalyzer /* for MDT */ {
                             }
                             zis.closeEntry();
                             fos.close();
+
+                            load(out);
                         }
                         WorkspaceActivity.toast(R.string.workspace_cache_created, Toast.LENGTH_SHORT);
                     }catch(IOException e){
@@ -176,14 +178,15 @@ public class PEAnalyzer /* for MDT */ {
 	
 	public Line load(File file){
 		ObjectInputStream ois = null;
-		
+
 		if(!file.exists()){
+            createCache();
 			return null;
 		}
-		
+
 		try{
 			ois = new ObjectInputStream(new FileInputStream(file));
-			
+
 			Line line = (Line) ois.readObject();
 			this.put(line);
 

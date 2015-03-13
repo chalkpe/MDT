@@ -54,6 +54,7 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
         offsetArea.setTypeface(WorkspaceActivity.inconsolata);
         valueAreaHex.setTypeface(WorkspaceActivity.inconsolata);
         valueAreaString.setTypeface(WorkspaceActivity.inconsolata);
+        informationText.setTypeface(WorkspaceActivity.inconsolata);
 
         offsetArea.addTextChangedListener(this);
 
