@@ -149,6 +149,24 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case  R.id.list_item_image:
+                int position = (Integer) v.getTag();
+                Patch patch = project.getPatches().get(position);
+
+                patch.setExcluded(!patch.isExcluded());
+                if(patch.isExcluded()){
+                    patch.setOverlapped(false);
+                }
+
+                findOverlappedPatches();
+                adapter.notifyDataSetChanged();
+                break;
+        }
+    }
+
     public Patch createPatchFromBundle(Bundle bundle){
         byte[] offsetBytes = bundle.getByteArray("offsetBytes");
         byte[] valueBytes = bundle.getByteArray("valueBytes");
@@ -223,17 +241,4 @@ public class ProjectActivity extends ActionBarActivity implements View.OnClickLi
             }
         }
     }
-
-	@Override
-	public void onClick(View v){
-		switch(v.getId()){
-			case  R.id.list_item_image:
-				int position = (int)v.getTag();
-				Patch patch = project.getPatches().get(position);
-
-				patch.setExcluded(!patch.isExcluded());
-				adapter.notifyDataSetChanged();
-				break;
-		}
-	}
 }
