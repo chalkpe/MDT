@@ -40,6 +40,10 @@
             android:name=".ExportProjectActivity"
             android:label="@string/title_activity_export_project" >
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings">
+        </activity>
     </application>
 
 </manifest>

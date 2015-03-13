@@ -88,5 +88,13 @@
     <string name="default_authorName" translatable="false">Unknown</string>
     <string name="default_cacheDirectory" translatable="false">PEAnalyzerCache</string>
 
+    <!-- Preferences -->
+    <string name="category_patch_related" translatable="false">Patches</string>
+    <string name="preference_default_value_title">Default value</string>
+    <string name="preference_default_value_summary">Default value which will be input when nothing was entered in patch value</string>
+    <string name="category_cache_related" translatable="false">Cache</string>
+    <string name="preference_cache_title">Load cache when the app starts</string>
+    <string name="preference_cache_summary">It loads a cache every time when using if disabled</string>
+
     <string name="hello_world" translatable="false">Hello world!</string>
 </resources>

@@ -68,4 +68,10 @@
     <string name="create_patch_memo">메모</string>
     <string name="create_patch_is_excluded">제외됨</string>
     <string name="create_patch_no_information">정보 없음</string>
+
+    <!-- Preference -->
+    <string name="preference_default_value_title">기본 값</string>
+    <string name="preference_default_value_summary">모드 값이 입력되지 않았을 경우 입력 될 값</string>
+    <string name="preference_cache_title">앱 시작 시 캐시 불러오기</string>
+    <string name="preference_cache_summary">비활성화 할 경우 쓸데마다 캐시를 불러옵니다</string>
 </resources>

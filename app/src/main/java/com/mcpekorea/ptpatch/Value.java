@@ -3,7 +3,9 @@ package com.mcpekorea.ptpatch;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @since 2015-03-06
@@ -11,6 +13,7 @@ import java.util.Arrays;
  */
 public class Value {
 	private byte[] bytes;
+	public static final byte[] BLANK = new byte[]{};
 
 	public Value(byte[] bytes){
 		setBytes(bytes);
@@ -78,4 +81,26 @@ public class Value {
     public static int byteArrayToInt(byte[] values) {
         return (values[0] << 24) | ((values[1] & 0xFF) << 16) | ((values[2] & 0xFF) << 8) | (values[3] & 0xFF);
     }
+
+	public static List<String> splitEqually(String text, int size) {
+		List<String> list = new ArrayList<>((text.length() + size - 1) / size);
+
+		for (int start = 0; start < text.length(); start += size) {
+			list.add(text.substring(start, Math.min(text.length(), start + size)));
+		}
+		return list;
+	}
+
+	public static byte[] getValueBytes(String hexString){
+			if(hexString == null || hexString.equals("")){
+				return BLANK;
+			}
+
+			List<String> valueStrings = splitEqually(hexString, 2);
+			byte[] valueBytes = new byte[valueStrings.size()];
+			for(int i = 0; i < valueStrings.size(); i++){
+				valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
+			}
+			return valueBytes;
+	}
 }

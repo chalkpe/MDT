@@ -69,4 +69,10 @@
     <string name="create_patch_value_type_unicode">ユニコード</string>
     <string name="create_patch_memo">メモ</string>
     <string name="create_patch_is_excluded">除外された</string>
+
+    <!-- Preference -->
+    <string name="preference_default_value_title">基本数値</string>
+    <string name="preference_default_value_summary">何も入力されなかった場合、自動的に入力される数値</string>
+    <string name="preference_cache_title">cacheをアプリケーションが始まる時ロード</string>
+    <string name="preference_cache_summary">非活性化の場合、</string>　<!-- TODO: Translation help wanted -->
 </resources>

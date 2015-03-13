@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,13 +23,11 @@ import com.mcpekorea.peanalyzer.UnsignedInteger;
 import com.mcpekorea.ptpatch.Value;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CreatePatchActivity extends ActionBarActivity implements TextWatcher {
-    public static final byte[] DEFAULT_VALUE = new byte[]{0x70, 0x47};
-    public static final byte[] BLANK = new byte[]{};
+    public static byte[] DEFAULT_VALUE;
 
     private int patchIndex;
     private EditText offsetArea, valueAreaHex, valueAreaString, memoArea;
@@ -44,6 +43,8 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_patch);
+
+	    DEFAULT_VALUE = Value.getValueBytes(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultValue", "7047"));
 
         offsetArea = (EditText) findViewById(R.id.create_patch_offset);
         valueAreaHex = (EditText) findViewById(R.id.create_patch_value_hex);
@@ -65,13 +66,13 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
                 if (currentValueType != checkedId) {
                     switch (checkedId) {
                         case R.id.create_patch_value_type_hex:
-                            valueAreaHex.setText(new Value(getValueBytes()).toString());
+                            valueAreaHex.setText(new Value(Value.getValueBytes(valueAreaHex.getText().toString())).toString());
                             valueAreaHex.setVisibility(View.VISIBLE);
                             valueAreaString.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.create_patch_value_type_unicode:
                             try {
-                                valueAreaString.setText(new String(getValueBytes(), "UTF-8"));
+                                valueAreaString.setText(new String(Value.getValueBytes(valueAreaHex.getText().toString()), "UTF-8"));
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                             }
@@ -126,13 +127,13 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
                     memo = "";
                 }
 
-                byte[] valueBytes = getValueBytes();
+                byte[] valueBytes = Value.getValueBytes(valueAreaHex.getText().toString());
 
-                if(Arrays.equals(valueBytes, BLANK)){
+                if(Arrays.equals(valueBytes, Value.BLANK)){
                     valueBytes = DEFAULT_VALUE;
                 }
 
-                List<String> offsetStrings = splitEqually(offsetString, 2);
+                List<String> offsetStrings = Value.splitEqually(offsetString, 2);
 
                 byte[] offsetBytes = new byte[offsetStrings.size()];
 
@@ -202,47 +203,6 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
             default:
                 return null;
         }
-    }
-
-    public byte[] getValueBytes(){
-        switch(currentValueType){
-            case R.id.create_patch_value_type_hex:
-                String hexString = valueAreaHex.getText().toString();
-                if(hexString == null || hexString.equals("")){
-                    return BLANK;
-                }
-
-                List<String> valueStrings = splitEqually(hexString, 2);
-                byte[] valueBytes = new byte[valueStrings.size()];
-                for(int i = 0; i < valueStrings.size(); i++){
-                    valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
-                }
-                return valueBytes;
-
-            case R.id.create_patch_value_type_unicode:
-                String unicodeString = valueAreaString.getText().toString();
-                if(unicodeString == null || unicodeString.equals("")){
-                    return BLANK;
-                }
-
-                try{
-                    return unicodeString.getBytes("UTF-8");
-                }catch(UnsupportedEncodingException e){
-                    e.printStackTrace();
-                    return BLANK;
-                }
-            default:
-                return BLANK;
-        }
-    }
-
-    public static List<String> splitEqually(String text, int size) {
-        List<String> list = new ArrayList<>((text.length() + size - 1) / size);
-
-        for (int start = 0; start < text.length(); start += size) {
-            list.add(text.substring(start, Math.min(text.length(), start + size)));
-        }
-        return list;
     }
 
     public void showCancelDialog(){
