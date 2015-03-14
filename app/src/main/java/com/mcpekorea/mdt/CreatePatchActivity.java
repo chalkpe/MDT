@@ -24,7 +24,6 @@ import com.mcpekorea.ptpatch.Value;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.List;
 
 public class CreatePatchActivity extends ActionBarActivity implements TextWatcher {
     public static byte[] DEFAULT_VALUE;
@@ -63,17 +62,21 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
         ((RadioGroup) findViewById(R.id.create_patch_value_type_group)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (currentValueType != checkedId) {
-                    switch (checkedId) {
+                if(currentValueType != checkedId){
+                    switch (checkedId){
                         case R.id.create_patch_value_type_hex:
-                            valueAreaHex.setText(new Value(Value.getValueBytes(valueAreaHex.getText().toString())).toString());
+                            try{
+                                valueAreaHex.setText(new Value(valueAreaString.getText().toString().getBytes("UTF-8")).toString());
+                            }catch(UnsupportedEncodingException e){
+                                e.printStackTrace();
+                            }
                             valueAreaHex.setVisibility(View.VISIBLE);
                             valueAreaString.setVisibility(View.INVISIBLE);
                             break;
                         case R.id.create_patch_value_type_unicode:
-                            try {
+                            try{
                                 valueAreaString.setText(new String(Value.getValueBytes(valueAreaHex.getText().toString()), "UTF-8"));
-                            } catch (UnsupportedEncodingException e) {
+                            }catch(UnsupportedEncodingException e){
                                 e.printStackTrace();
                             }
                             valueAreaString.setVisibility(View.VISIBLE);
@@ -127,19 +130,12 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
                     memo = "";
                 }
 
-                byte[] valueBytes = Value.getValueBytes(valueAreaHex.getText().toString());
-
-                if(Arrays.equals(valueBytes, Value.BLANK)){
+                byte[] valueBytes = getCurrentValueBytes();
+                if(valueBytes == null || Arrays.equals(valueBytes, Value.BLANK)){
                     valueBytes = DEFAULT_VALUE;
                 }
 
-                List<String> offsetStrings = Value.splitEqually(offsetString, 2);
-
-                byte[] offsetBytes = new byte[offsetStrings.size()];
-
-                for(int i = 0; i < offsetStrings.size(); i++){
-                    offsetBytes[i] = (byte) Integer.parseInt(offsetStrings.get(i), 16);
-                }
+                byte[] offsetBytes = Value.getValueBytes(offsetString);
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("patchIndex", patchIndex);
@@ -200,6 +196,22 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
                 return valueAreaHex;
             case R.id.create_patch_value_type_unicode:
                 return valueAreaString;
+            default:
+                return null;
+        }
+    }
+
+    public byte[] getCurrentValueBytes(){
+        switch(currentValueType){
+            case R.id.create_patch_value_type_hex:
+                return Value.getValueBytes(valueAreaHex.getText().toString());
+            case R.id.create_patch_value_type_unicode:
+                try{
+                    return valueAreaString.getText().toString().getBytes("UTF-8");
+                }catch (UnsupportedEncodingException e){
+                    e.printStackTrace();
+                    return null;
+                }
             default:
                 return null;
         }
