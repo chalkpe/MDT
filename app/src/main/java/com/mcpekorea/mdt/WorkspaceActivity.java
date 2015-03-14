@@ -263,10 +263,6 @@ public class WorkspaceActivity extends ActionBarActivity implements View.OnClick
         });
     }
 
-    public static SharedPreferences getSharedPreference(){
-        return getSharedPreference("pref");
-    }
-
     public static SharedPreferences getSharedPreference(String name){
         return that.getSharedPreferences(name, Context.MODE_PRIVATE);
     }

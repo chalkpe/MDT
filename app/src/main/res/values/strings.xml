@@ -11,6 +11,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_project">Project</string>
     <string name="title_activity_export_project">Export project</string>
+    <string name="title_activity_information">Information</string>
 
     <!-- Action bar item -->
     <string name="action_settings">Settings</string>
@@ -42,6 +43,8 @@
     <string name="toast_project_exported">Project was exported successfully.</string>
     <string name="toast_project_nothing_to_export">Nothing to export!</string>
     <string name="toast_project_has_overlapped_patches">Project has overlapped patches!</string>
+    <string name="toast_cache_created">Cache has been created.</string>
+    <string name="toast_cache_loaded">Cache has been loaded.</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s cannot be empty!</string>
@@ -49,8 +52,6 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d patches, by %s</string>
-    <string name="workspace_cache_created">Cache has been created.</string>
-    <string name="workspace_cache_loaded">Cache has been loaded.</string>
 
     <!-- ExportProjectActivity -->
     <string name="export_project_type">Export type</string>
@@ -89,12 +90,13 @@
     <string name="default_cacheDirectory" translatable="false">PEAnalyzerCache</string>
 
     <!-- Preferences -->
-    <string name="category_patch_related" translatable="false">Patches</string>
-    <string name="preference_default_value_title">Default value</string>
-    <string name="preference_default_value_summary">Default value which will be input when nothing was entered in patch value</string>
-    <string name="category_cache_related" translatable="false">Cache</string>
-    <string name="preference_cache_title">Load cache when the app starts</string>
-    <string name="preference_cache_summary">It loads a cache every time when using if disabled</string>
+    <string name="preference_category_patch_related" translatable="false">Patch</string>
+    <string name="preference_category_cache_related" translatable="false">Cache</string>
+    <string name="preference_category_information" translatable="false">Information</string>
+
+    <string name="preference_title_default_value">Default value</string>
+    <string name="preference_title_cache">Load cache when the app starts</string>
+    <string name="preference_title_license_information">License information</string>
 
     <string name="hello_world" translatable="false">Hello world!</string>
 </resources>

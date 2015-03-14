@@ -40,7 +40,7 @@ public class ExportProjectActivity extends ActionBarActivity {
         typeSpinner = (Spinner) findViewById(R.id.export_project_type_spinner);
         directoryArea = (EditText) findViewById(R.id.export_project_directory);
 
-        directoryArea.setText(WorkspaceActivity.getSharedPreference().getString("lastExportDirectory", WorkspaceActivity.EXPORT_DIRECTORY.getAbsolutePath()));
+        directoryArea.setText(WorkspaceActivity.getSharedPreference("preferences").getString("lastExportDirectory", WorkspaceActivity.EXPORT_DIRECTORY.getAbsolutePath()));
 
         findViewById(R.id.export_project_select).setOnLongClickListener(new View.OnLongClickListener(){
             @Override
@@ -118,7 +118,7 @@ public class ExportProjectActivity extends ActionBarActivity {
         if(exportDirectory == null){
             exportDirectory = WorkspaceActivity.EXPORT_DIRECTORY;
         }
-        WorkspaceActivity.getSharedPreference().edit().putString("lastExportDirectory", exportDirectory.getAbsolutePath()).apply();
+        WorkspaceActivity.getSharedPreference("preferences").edit().putString("lastExportDirectory", exportDirectory.getAbsolutePath()).apply();
         exportDirectory.mkdirs();
 
         File file = new File(exportDirectory, project.getName() + "-" + type + ".mod");

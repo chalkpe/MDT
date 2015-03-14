@@ -11,6 +11,7 @@
     <string name="title_activity_settings">設定</string>
     <string name="title_activity_project">プロジェクト</string>
     <string name="title_activity_export_project">プロジェクトをエクスポートする</string>
+    <string name="title_activity_information">情報</string>
 
     <!-- Action bar item -->
     <string name="action_settings">設定</string>
@@ -42,6 +43,8 @@
     <string name="toast_project_exported">プロジェクトを成功的にエクスポートしました。</string>
     <string name="toast_project_nothing_to_export">エクスポートするものは何もありません！</string>
     <string name="toast_project_has_overlapped_patches">プロジェクトにオーバーラップされたパッチがあります！</string>
+    <string name="toast_cache_created">キャッシュが生成されました。</string>
+    <string name="toast_cache_loaded">キャッシュがロードされました。</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%sを空白にすることはできません！</string>
@@ -49,8 +52,6 @@
 
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d個のパッチ、作成者 %s</string>
-    <string name="workspace_cache_created">キャッシュが生成されました。</string>
-    <string name="workspace_cache_loaded">キャッシュがロードされました。</string>
 
     <!-- ExportProjectActivity -->
     <string name="export_project_type">エクスポートタイプ</string>
@@ -71,8 +72,7 @@
     <string name="create_patch_is_excluded">除外された</string>
 
     <!-- Preference -->
-    <string name="preference_default_value_title">基本数値</string>
-    <string name="preference_default_value_summary">何も入力されなかった場合、自動的に入力される数値</string>
-    <string name="preference_cache_title">cacheをアプリケーションが始まる時ロード</string>
-    <string name="preference_cache_summary">非活性化の場合、</string>　<!-- TODO: Translation help wanted -->
+    <string name="preference_title_default_value">基本数値</string>
+    <string name="preference_title_cache">キャッシュをアプリケーションが始まる時ロード</string>
+    <string name="preference_title_license_information">ライセンス情報</string>
 </resources>

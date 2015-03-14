@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/category_patch_related">
+    <PreferenceCategory android:title="@string/preference_category_patch_related">
         <EditTextPreference
-            android:defaultValue="7047"
             android:key="defaultValue"
-            android:maxLines="1"
-            android:selectAllOnFocus="true"
+            android:defaultValue="7047"
+            android:title="@string/preference_title_default_value"
             android:singleLine="true"
-            android:title="@string/preference_default_value_title"
-            android:summary="@string/preference_default_value_summary"
-            />
+            android:selectAllOnFocus="true" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_cache_related">
+
+    <PreferenceCategory android:title="@string/preference_category_cache_related">
         <CheckBoxPreference
-            android:defaultValue="true"
             android:key="loadCache"
-            android:title="@string/preference_cache_title"
-            android:summary="@string/preference_cache_summary"
-            />
+            android:defaultValue="true"
+            android:title="@string/preference_title_cache" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preference_category_information">
+        <Preference android:title="@string/preference_title_license_information">
+            <intent android:action="com.mcpekorea.mdt.INFORMATION" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

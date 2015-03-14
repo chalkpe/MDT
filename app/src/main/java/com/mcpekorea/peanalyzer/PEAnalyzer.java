@@ -1,5 +1,6 @@
 package com.mcpekorea.peanalyzer;
 
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.mcpekorea.mdt.R;
@@ -42,7 +43,9 @@ public class PEAnalyzer /* for MDT */ {
 	public PEAnalyzer(File cacheDirectory) throws IOException {
 		this.cacheDirectory = cacheDirectory;
 		this.lines = new HashMap<>(1048576); //2^20
-		this.loadCache();
+        if(PreferenceManager.getDefaultSharedPreferences(WorkspaceActivity.that).getBoolean("loadCache", true)){
+            this.loadCache();
+        }
 	}
 	
 	private void loadCache(){
@@ -73,7 +76,7 @@ public class PEAnalyzer /* for MDT */ {
 						load(file);
 					}
 				}
-				WorkspaceActivity.toast(R.string.workspace_cache_loaded, Toast.LENGTH_SHORT);
+				WorkspaceActivity.toast(R.string.toast_cache_loaded, Toast.LENGTH_SHORT);
 			}
 		}.start();
 	}
@@ -116,7 +119,7 @@ public class PEAnalyzer /* for MDT */ {
 
                             load(out);
                         }
-                        WorkspaceActivity.toast(R.string.workspace_cache_created, Toast.LENGTH_SHORT);
+                        WorkspaceActivity.toast(R.string.toast_cache_created, Toast.LENGTH_SHORT);
                     }catch(IOException e){
                         e.printStackTrace();
                     }finally{

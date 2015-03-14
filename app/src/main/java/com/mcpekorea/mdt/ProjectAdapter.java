@@ -18,8 +18,7 @@ import java.util.List;
  * @author onebone <jyc0410@naver.com>
  */
 
-public class ProjectAdapter extends BaseAdapter{
-	private Context context;
+public class ProjectAdapter extends BaseAdapter {
 	private List<Patch> patches;
 	private LayoutInflater inflater;
 	private View.OnClickListener listener;
@@ -31,8 +30,6 @@ public class ProjectAdapter extends BaseAdapter{
         if(patches == null){
             throw new NullPointerException("patches must not be null");
         }
-
-		this.context = context;
 		this.patches = patches;
 		this.listener = listener;
 

@@ -11,6 +11,7 @@
     <string name="title_activity_settings">설정</string>
     <string name="title_activity_project">프로젝트</string>
     <string name="title_activity_export_project">프로젝트 내보내기</string>
+    <string name="title_activity_information">정보</string>
 
     <!-- Action bar item -->
     <string name="action_settings">설정</string>
@@ -42,14 +43,14 @@
     <string name="toast_project_exported">프로젝트를 성공적으로 내보냈습니다.</string>
     <string name="toast_project_nothing_to_export">내보낼 것이 아무것도 없습니다!</string>
     <string name="toast_project_has_overlapped_patches">프로젝트에 중첩된 패치가 있습니다!</string>
+    <string name="toast_cache_created">캐시가 생성되었습니다.</string>
+    <string name="toast_cache_loaded">캐시가 로드되었습니다.</string>
 
     <!-- EditText error -->
     <string name="error_empty" formatted="false">%s[[는]] 비워 둘 수 없습니다!</string>
     <string name="error_project_already_exists" formatted="false">프로젝트 %s[[가]] 이미 존재합니다!</string>
     <!-- WorkspaceActivity -->
     <string name="workspace_project_information" formatted="false">%d개의 패치, 작성자 %s</string>
-    <string name="workspace_cache_created">캐시가 생성되었습니다.</string>
-    <string name="workspace_cache_loaded">캐시가 로드되었습니다.</string>
 
     <!-- ExportProjectActivity -->
     <string name="export_project_type">내보내기 유형</string>
@@ -70,8 +71,7 @@
     <string name="create_patch_no_information">정보 없음</string>
 
     <!-- Preference -->
-    <string name="preference_default_value_title">기본 값</string>
-    <string name="preference_default_value_summary">모드 값이 입력되지 않았을 경우 입력 될 값</string>
-    <string name="preference_cache_title">앱 시작 시 캐시 불러오기</string>
-    <string name="preference_cache_summary">비활성화 할 경우 쓸데마다 캐시를 불러옵니다</string>
+    <string name="preference_title_default_value">기본 값</string>
+    <string name="preference_title_cache">앱 시작 시 모든 캐시 불러오기</string>
+    <string name="preference_title_license_information">라이센스 정보</string>
 </resources>
