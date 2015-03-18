@@ -19,6 +19,21 @@ public class Value {
 		setBytes(bytes);
 	}
 
+    public Value(String hexString){
+        if(hexString == null || hexString.equals("")) {
+            setBytes(BLANK);
+            return;
+        }
+
+        List<String> valueStrings = splitEqually(hexString, 2);
+        byte[] valueBytes = new byte[valueStrings.size()];
+        for(int i = 0; i < valueStrings.size(); i++){
+            valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
+        }
+
+        setBytes(valueBytes);
+    }
+
 	public byte[] getBytes() {
 		return bytes;
 	}
@@ -83,24 +98,14 @@ public class Value {
     }
 
 	public static List<String> splitEqually(String text, int size) {
+        for(int i = 0; i < text.length() % size; i++){
+            text = "0" + text;
+        }
 		List<String> list = new ArrayList<>((text.length() + size - 1) / size);
 
 		for (int start = 0; start < text.length(); start += size) {
 			list.add(text.substring(start, Math.min(text.length(), start + size)));
 		}
 		return list;
-	}
-
-	public static byte[] getValueBytes(String hexString){
-			if(hexString == null || hexString.equals("")){
-				return BLANK;
-			}
-
-			List<String> valueStrings = splitEqually(hexString, 2);
-			byte[] valueBytes = new byte[valueStrings.size()];
-			for(int i = 0; i < valueStrings.size(); i++){
-				valueBytes[i] = (byte) Integer.parseInt(valueStrings.get(i), 16);
-			}
-			return valueBytes;
 	}
 }

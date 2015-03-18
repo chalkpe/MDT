@@ -9,6 +9,10 @@ import org.json.JSONArray;
 public class Offset extends Value {
 	public static final int SIZE = 4;
 
+    public Offset(String hexString){
+        super(hexString);
+    }
+
 	public Offset(byte[] bytes){
 		super(bytes);
 		setBytes(bytes);

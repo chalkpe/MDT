@@ -20,13 +20,14 @@ import android.widget.TextView;
 import com.mcpekorea.hangul.Hangul;
 import com.mcpekorea.peanalyzer.Line;
 import com.mcpekorea.peanalyzer.UnsignedInteger;
+import com.mcpekorea.ptpatch.Offset;
 import com.mcpekorea.ptpatch.Value;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class CreatePatchActivity extends ActionBarActivity implements TextWatcher {
-    public static byte[] DEFAULT_VALUE;
+    public static Value DEFAULT_VALUE;
 
     private int patchIndex;
     private EditText offsetArea, valueAreaHex, valueAreaString, memoArea;
@@ -43,7 +44,7 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_patch);
 
-	    DEFAULT_VALUE = Value.getValueBytes(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultValue", "7047"));
+	    DEFAULT_VALUE = new Value(PreferenceManager.getDefaultSharedPreferences(this).getString("defaultValue", "7047"));
 
         offsetArea = (EditText) findViewById(R.id.create_patch_offset);
         valueAreaHex = (EditText) findViewById(R.id.create_patch_value_hex);
@@ -75,7 +76,7 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
                             break;
                         case R.id.create_patch_value_type_unicode:
                             try{
-                                valueAreaString.setText(new String(Value.getValueBytes(valueAreaHex.getText().toString()), "UTF-8"));
+                                valueAreaString.setText(new String(new Value(valueAreaHex.getText().toString()).getBytes(), "UTF-8"));
                             }catch(UnsupportedEncodingException e){
                                 e.printStackTrace();
                             }
@@ -130,17 +131,17 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
                     memo = "";
                 }
 
-                byte[] valueBytes = getCurrentValueBytes();
-                if(valueBytes == null || Arrays.equals(valueBytes, Value.BLANK)){
-                    valueBytes = DEFAULT_VALUE;
+                Value value = getValue();
+                if(value == null || Arrays.equals(value.getBytes(), Value.BLANK)){
+                    value = DEFAULT_VALUE;
                 }
 
-                byte[] offsetBytes = Value.getValueBytes(offsetString);
+                Offset offset = new Offset(offsetString);
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("patchIndex", patchIndex);
-                bundle.putByteArray("offsetBytes", offsetBytes);
-                bundle.putByteArray("valueBytes", valueBytes);
+                bundle.putByteArray("offsetBytes", offset.getBytes());
+                bundle.putByteArray("valueBytes", value.getBytes());
                 bundle.putString("memo", memo.trim());
                 bundle.putBoolean("isExcluded", isExcludedBox.isChecked());
                 bundle.putBoolean("deleted", false);
@@ -190,28 +191,28 @@ public class CreatePatchActivity extends ActionBarActivity implements TextWatche
         return super.onKeyDown(keyCode, event);
     }
 
+    public Value getValue(){
+        switch(currentValueType){
+            case R.id.create_patch_value_type_hex:
+                return new Value(valueAreaHex.getText().toString());
+            case R.id.create_patch_value_type_unicode:
+                try{
+                    return new Value(valueAreaString.getText().toString().getBytes("UTF-8"));
+                }catch (UnsupportedEncodingException e){
+                    e.printStackTrace();
+                    return null;
+                }
+            default:
+                return null;
+        }
+    }
+
     public EditText getCurrentValueArea(){
         switch(currentValueType){
             case R.id.create_patch_value_type_hex:
                 return valueAreaHex;
             case R.id.create_patch_value_type_unicode:
                 return valueAreaString;
-            default:
-                return null;
-        }
-    }
-
-    public byte[] getCurrentValueBytes(){
-        switch(currentValueType){
-            case R.id.create_patch_value_type_hex:
-                return Value.getValueBytes(valueAreaHex.getText().toString());
-            case R.id.create_patch_value_type_unicode:
-                try{
-                    return valueAreaString.getText().toString().getBytes("UTF-8");
-                }catch (UnsupportedEncodingException e){
-                    e.printStackTrace();
-                    return null;
-                }
             default:
                 return null;
         }
